@@ -23,4 +23,8 @@ public class MemberService {
     public Member findMemberById(Long id) {
         return memberRepository.findById(id).orElseThrow(NotFindMemberException::new);
     }
+
+    public boolean duplicateMemberId(String memberId) {
+        return memberRepository.duplicateId(memberId) > 0;
+    }
 }

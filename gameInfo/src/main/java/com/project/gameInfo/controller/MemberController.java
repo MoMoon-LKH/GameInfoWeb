@@ -2,11 +2,16 @@ package com.project.gameInfo.controller;
 
 import com.project.gameInfo.controller.dto.MemberDto;
 import com.project.gameInfo.domain.Member;
+import com.project.gameInfo.exception.DuplicateMemberIdException;
 import com.project.gameInfo.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/member")
@@ -19,13 +24,34 @@ public class MemberController {
 
     @PostMapping("/join")
     public ResponseEntity<?> joinMember(@RequestBody MemberDto memberDto) {
+
+        Map<String, Object> joinMem = new HashMap<>();
+
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        Member member = Member.createMember(memberDto);
 
-        Long memberId = memberService.save(member);
+        if (memberService.duplicateMemberId(memberDto.getMemberId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DuplicateMemberIdException());
+        } else {
 
-        return ResponseEntity.ok("가입 아이디: " + memberId);
+            Member join = Member.createMember(memberDto);
+
+            Long memberId = memberService.save(join);
+            Member member = memberService.findMemberById(memberId);
+
+            joinMem.put("아이디", member.getId());
+            joinMem.put("멤버 아이디", member.getMemberId());
+            joinMem.put("닉네임", member.getNickname());
+            joinMem.put("이메일", member.getEmail());
+
+            return ResponseEntity.ok(joinMem);
+        }
     }
+
+    @GetMapping("/join/duplicate")
+    public ResponseEntity<?> duplicateMemberId(@RequestParam String memberId) {
+        return ResponseEntity.ok("아이디 중복 여부: " + memberService.duplicateMemberId(memberId));
+    }
+
 
     @GetMapping("/info")
     public ResponseEntity<?> findMember(@RequestParam Long id) {
@@ -33,6 +59,7 @@ public class MemberController {
 
         return ResponseEntity.ok(convertMemberDto(member));
     }
+
 
 
     public MemberDto convertMemberDto(Member member) {

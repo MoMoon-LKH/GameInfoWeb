@@ -31,5 +31,6 @@ public class MemberDto {
     @NotNull
     private String email;
 
+
     private String status;
 }
