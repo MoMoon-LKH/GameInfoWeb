@@ -30,6 +30,9 @@ public class Comment {
     @Enumerated(EnumType.STRING)
     private CommentStatus status;
 
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     public Comment() {}
 

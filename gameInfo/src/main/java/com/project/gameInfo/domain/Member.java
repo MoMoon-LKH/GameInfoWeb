@@ -5,7 +5,9 @@ import com.project.gameInfo.domain.enums.MemberStatus;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +43,10 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
+
+    @OneToMany(mappedBy = "member")
+    private List<Post> posts = new ArrayList<>();
+
 
     public Member() {
 

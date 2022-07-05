@@ -1,5 +1,7 @@
 package com.project.gameInfo.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,6 +16,7 @@ public class MemberDto {
     private String memberId;
 
     @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotNull
@@ -27,4 +30,6 @@ public class MemberDto {
 
     @NotNull
     private String email;
+
+    private String status;
 }
