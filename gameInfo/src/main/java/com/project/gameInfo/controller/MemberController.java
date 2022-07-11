@@ -28,6 +28,7 @@ public class MemberController {
         Map<String, Object> joinMem = new HashMap<>();
 
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+        memberDto.setRoles("USER");
 
         if (memberService.duplicateMemberId(memberDto.getMemberId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DuplicateMemberIdException());
@@ -49,7 +50,7 @@ public class MemberController {
 
     @GetMapping("/join/duplicate")
     public ResponseEntity<?> duplicateMemberId(@RequestParam String memberId) {
-        return ResponseEntity.ok("아이디 중복 여부: " + memberService.duplicateMemberId(memberId));
+        return ResponseEntity.ok(memberService.duplicateMemberId(memberId));
     }
 
 

@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -44,8 +45,11 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
+    private String roles;
+
     @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
+
 
 
     public Member() {
@@ -66,6 +70,11 @@ public class Member {
 
     public static Member createMember(MemberDto memberDto) {
         return new Member(memberDto);
+    }
+
+
+    public List<String> getRoleList() {
+        return Arrays.asList(this.roles.split(","));
     }
 
 }

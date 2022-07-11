@@ -8,3 +8,9 @@ spring:
       ddl-auto: update
     show-sql: true
     database: mysql
+
+
+
+jwt:
+  token-validity-in-seconds: 600
+  refresh-validity-date: 7

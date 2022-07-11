@@ -24,6 +24,10 @@ public class MemberService {
         return memberRepository.findById(id).orElseThrow(NotFindMemberException::new);
     }
 
+    public Member findMemberByMemberId(String memberId) {
+        return memberRepository.findOneByMemberId(memberId).orElseThrow(NotFindMemberException::new);
+    }
+
     public boolean duplicateMemberId(String memberId) {
         return memberRepository.duplicateId(memberId) > 0;
     }
