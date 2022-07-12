@@ -35,10 +35,10 @@ public class JwtFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = resolveToken(httpServletRequest);
+        String access = resolveToken(httpServletRequest);
 
-        if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
-            Authentication authentication = tokenProvider.getAuthentication(token);
+        if (StringUtils.hasText(access) && tokenProvider.validateToken(access)) {
+            Authentication authentication = tokenProvider.getAuthentication(access);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         }

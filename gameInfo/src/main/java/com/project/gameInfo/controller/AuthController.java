@@ -14,12 +14,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -53,4 +52,18 @@ public class AuthController {
 
         return ResponseEntity.ok(new TokenDto(access, refresh));
     }
+
+    @PostMapping("/re-access")
+    public ResponseEntity<?> reAuthorize(@Valid @RequestBody TokenDto tokenDto, @RequestParam String memberId) {
+
+        String accessToken = refreshTokenService.generateAccessTokenFromRefreshToken(tokenDto.getRefreshToken(), memberId);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("access", accessToken);
+
+        return ResponseEntity.ok(map);
+    }
+
+
+
 }
