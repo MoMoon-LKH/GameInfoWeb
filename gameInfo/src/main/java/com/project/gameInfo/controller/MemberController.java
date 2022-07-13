@@ -70,7 +70,9 @@ public class MemberController {
                 .name(member.getName())
                 .email(member.getEmail())
                 .phone(member.getPhone())
+                .nickname(member.getNickname())
                 .status(member.getStatus().toString())
+                .roles(member.getRoles())
                 .build();
     }
 }

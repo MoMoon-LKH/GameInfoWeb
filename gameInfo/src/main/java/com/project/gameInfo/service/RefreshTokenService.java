@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -31,6 +33,21 @@ public class RefreshTokenService {
         return refreshTokenRepository.save(refreshToken).getId();
     }
 
+    @Transactional
+    public void delete(RefreshToken refreshToken) {
+        refreshTokenRepository.delete(refreshToken);
+    }
+
+    @Transactional
+    public void update(RefreshToken refreshToken, String token) {
+        refreshToken.update(token);
+    }
+
+    public Optional<RefreshToken> findByMemberId(Long id) {
+        return refreshTokenRepository.findByMember_Id(id);
+    }
+
+    @Transactional
     public String generateAccessTokenFromRefreshToken(String refresh, String memberId) {
 
         String accessToken;

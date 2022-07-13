@@ -27,6 +27,7 @@ public class Comment {
     @Column(name = "create_date")
     private Date createDate;
 
+
     @Enumerated(EnumType.STRING)
     private CommentStatus status;
 
@@ -37,7 +38,10 @@ public class Comment {
     public Comment() {}
 
     private Comment(CommentDto commentDto) {
-
+        this.replyId = commentDto.getReplyId();
+        this.memberId = commentDto.getMemberId();
+        this.nickname = commentDto.getNickname();
+        this.content = commentDto.getContent();
         this.createDate = new Date();
         this.status = CommentStatus.ALIVE;
     }
@@ -45,6 +49,14 @@ public class Comment {
 
     public static Comment createComment(CommentDto commentDto) {
         return new Comment(commentDto);
+    }
+
+    public void updateComment(CommentDto commentDto) {
+        this.content = commentDto.getContent();
+    }
+
+    public void deleteComment() {
+        this.status = CommentStatus.DEL;
     }
 
 

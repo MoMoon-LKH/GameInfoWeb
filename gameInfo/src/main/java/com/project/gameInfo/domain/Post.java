@@ -38,11 +38,23 @@ public class Post {
     public Post() {
     }
 
-    private Post(PostDto postDto) {
+    private Post(PostDto postDto, Category category, Member member) {
+        this.title = postDto.getTitle();
+        this.content = postDto.getContent();
+        this.createDate = new Date();
+        this.updateDate = new Date();
+        this.category = category;
+        this.member = member;
 
     }
 
-    public static Post createPost(PostDto postDto) {
-        return new Post(postDto);
+    public static Post createPost(PostDto postDto, Category category, Member member) {
+        return new Post(postDto, category,member);
+    }
+
+    public void updatePost(PostDto postDto) {
+        this.title = title;
+        this.content = content;
+        this.updateDate = new Date();
     }
 }

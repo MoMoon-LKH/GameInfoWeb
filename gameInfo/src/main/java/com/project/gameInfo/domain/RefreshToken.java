@@ -16,8 +16,6 @@ public class RefreshToken {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-    @Column(name = "access_token")
-    private String accessToken;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -26,9 +24,8 @@ public class RefreshToken {
     private Member member;
 
 
-    private RefreshToken(String refreshToken, String accessToken, Member member) {
+    private RefreshToken(String refreshToken,  Member member) {
         this.refreshToken = refreshToken;
-        this.accessToken = accessToken;
         this.createDate = new Date();
         this.member = member;
     }
@@ -37,7 +34,12 @@ public class RefreshToken {
 
     }
 
-    public static RefreshToken createRefreshToken(String refreshToken, String accessToken, Member member) {
-        return new RefreshToken(refreshToken, accessToken, member);
+    public static RefreshToken createRefreshToken(String refreshToken,  Member member) {
+        return new RefreshToken(refreshToken, member);
+    }
+
+    public void update(String refreshToken) {
+        this.refreshToken = refreshToken;
+        this.createDate = new Date();
     }
 }

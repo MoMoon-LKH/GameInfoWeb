@@ -65,6 +65,7 @@ public class Member {
         this.email = memberDto.getEmail();
         this.creatDate = new Date();
         this.updateDate = new Date();
+        this.roles = memberDto.getRoles();
         this.status = MemberStatus.ALIVE;
     }
 

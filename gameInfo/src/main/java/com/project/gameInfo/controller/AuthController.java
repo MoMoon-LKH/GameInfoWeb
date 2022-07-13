@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -45,10 +46,15 @@ public class AuthController {
         String refresh = tokenProvider.createRefreshToken(authentication);
 
         Member member = memberService.findMemberByMemberId(loginDto.getMemberId());
+        Optional<RefreshToken> refreshToken = refreshTokenService.findByMemberId(member.getId());
 
-        RefreshToken refreshToken = RefreshToken.createRefreshToken(refresh, access, member);
 
-        refreshTokenService.save(refreshToken);
+        if (refreshToken.isPresent()) {
+            refreshTokenService.update(refreshToken.get(), refresh);
+        }else{
+            RefreshToken newRefresh = RefreshToken.createRefreshToken(refresh, member);
+            refreshTokenService.save(newRefresh);
+        }
 
         return ResponseEntity.ok(new TokenDto(access, refresh));
     }

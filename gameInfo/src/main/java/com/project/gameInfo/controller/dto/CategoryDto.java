@@ -5,17 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class LoginDto {
+@NoArgsConstructor
+public class CategoryDto {
 
-    @NotNull
-    private String memberId;
+    private Long id;
 
-    @NotNull
-    private String password;
+    private String name;
+
+    private Long parentId;
 }
