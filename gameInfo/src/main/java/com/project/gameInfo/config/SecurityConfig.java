@@ -38,6 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .authorizeHttpRequests()
+                .antMatchers("/api/user/**").hasAnyRole("USER", "REVIEW", "ADMIN")
+                .antMatchers("/api/review/**").hasAnyRole("REVIEW", "ADMIN")
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/member/join/**", "/api/auth/**").permitAll()
                 .anyRequest().authenticated()
 
@@ -46,8 +49,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-    }
 }

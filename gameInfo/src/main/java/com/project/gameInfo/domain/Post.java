@@ -35,6 +35,9 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post")
+    private List<Image> images = new ArrayList<>();
+
     public Post() {
     }
 

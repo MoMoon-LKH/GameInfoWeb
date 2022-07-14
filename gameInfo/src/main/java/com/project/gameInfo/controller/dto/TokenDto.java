@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class TokenDto {
 
+    @NotNull
     private String accessToken;
 
     @NotNull

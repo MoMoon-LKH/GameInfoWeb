@@ -60,9 +60,9 @@ public class AuthController {
     }
 
     @PostMapping("/re-access")
-    public ResponseEntity<?> reAuthorize(@Valid @RequestBody TokenDto tokenDto, @RequestParam String memberId) {
+    public ResponseEntity<?> reAuthorize(@Valid @RequestBody TokenDto tokenDto) {
 
-        String accessToken = refreshTokenService.generateAccessTokenFromRefreshToken(tokenDto.getRefreshToken(), memberId);
+        String accessToken = refreshTokenService.generateAccessTokenFromRefreshToken(tokenDto.getRefreshToken(), tokenDto.getAccessToken());
 
         Map<String, String> map = new HashMap<>();
         map.put("access", accessToken);

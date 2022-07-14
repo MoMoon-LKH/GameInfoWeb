@@ -48,14 +48,14 @@ public class RefreshTokenService {
     }
 
     @Transactional
-    public String generateAccessTokenFromRefreshToken(String refresh, String memberId) {
+    public String generateAccessTokenFromRefreshToken(String refresh, String access) {
 
         String accessToken;
 
         RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(refresh)
                 .orElseThrow(() -> new TokenNotFoundException("Refresh Token Not Found"));
 
-        if (refreshToken.getMember().getMemberId().equals(memberId)) {
+        if (refreshToken.getAccessToken().equals(access)) {
 
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(refreshToken.getMember().getMemberId(), refreshToken.getMember().getPassword());

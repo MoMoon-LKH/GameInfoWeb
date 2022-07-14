@@ -16,6 +16,9 @@ public class RefreshToken {
     @Column(name = "refresh_token")
     private String refreshToken;
 
+    @Column(name = "access_token")
+    private String accessToken;
+
 
     @Column(name = "create_date")
     private Date createDate;

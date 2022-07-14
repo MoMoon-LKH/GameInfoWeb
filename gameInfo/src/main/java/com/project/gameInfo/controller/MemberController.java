@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +56,7 @@ public class MemberController {
 
 
     @GetMapping("/info")
+    @RolesAllowed({"USER", "ADMIN", "REVIEW"})
     public ResponseEntity<?> findMember(@RequestParam Long id) {
         Member member = memberService.findMemberById(id);
 
