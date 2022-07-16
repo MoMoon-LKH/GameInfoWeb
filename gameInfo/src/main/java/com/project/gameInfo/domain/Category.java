@@ -1,6 +1,7 @@
 package com.project.gameInfo.domain;
 
 import com.project.gameInfo.controller.dto.CategoryDto;
+import com.project.gameInfo.domain.enums.CategoryState;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -17,6 +18,8 @@ public class Category {
     @Column(name = "parent_id")
     private Long parentId;
 
+    private CategoryState state;
+
 
     public Category() {
     }
@@ -24,7 +27,9 @@ public class Category {
     private Category(CategoryDto categoryDto) {
         this.name = categoryDto.getName();
         this.parentId = categoryDto.getParentId();
+        this.state = CategoryState.ALIVE;
     }
+
 
 
     public static Category createCategory(CategoryDto categoryDto) {
@@ -34,5 +39,9 @@ public class Category {
 
     public void updateName(String name) {
         this.name = name;
+    }
+
+    public void updateDeleteState() {
+        this.state = CategoryState.DELETE;
     }
 }

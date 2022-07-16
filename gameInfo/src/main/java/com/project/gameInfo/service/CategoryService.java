@@ -24,4 +24,13 @@ public class CategoryService {
         category.updateName(name);
     }
 
+    @Transactional
+    public void deleteState(Category category) {
+        category.updateDeleteState();
+    }
+
+    public Category findByCategoryId(Long id) {
+        return categoryRepository.findById(id).orElseThrow(NoSuchFieldError::new);
+    }
+
 }

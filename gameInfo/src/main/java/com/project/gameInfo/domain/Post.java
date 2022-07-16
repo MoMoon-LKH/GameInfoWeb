@@ -19,6 +19,8 @@ public class Post {
 
     private String content;
 
+    private int view;
+
     @Column(name = "create_date")
     private Date createDate;
 
@@ -44,6 +46,7 @@ public class Post {
     private Post(PostDto postDto, Category category, Member member) {
         this.title = postDto.getTitle();
         this.content = postDto.getContent();
+        this.view = 0;
         this.createDate = new Date();
         this.updateDate = new Date();
         this.category = category;
