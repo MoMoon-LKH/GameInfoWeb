@@ -27,18 +27,21 @@ public class Post {
     @Column(name = "update_date")
     private Date updateDate;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private List<Image> images = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post")
+    private List<ReviewScore> reviewScores = new ArrayList<>();
 
     public Post() {
     }

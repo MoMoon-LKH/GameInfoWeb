@@ -18,6 +18,7 @@ public class Category {
     @Column(name = "parent_id")
     private Long parentId;
 
+    @Enumerated(EnumType.STRING)
     private CategoryState state;
 
 

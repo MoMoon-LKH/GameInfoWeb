@@ -15,5 +15,7 @@ public class CategoryDto {
 
     private String name;
 
+    private int depth;
+
     private Long parentId;
 }
