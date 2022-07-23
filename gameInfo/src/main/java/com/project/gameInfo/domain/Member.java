@@ -50,6 +50,12 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<CommentLike> commentLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<CommentUnlike> commentUnlikes = new ArrayList<>();
+
 
 
     public Member() {

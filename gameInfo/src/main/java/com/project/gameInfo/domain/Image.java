@@ -13,7 +13,8 @@ public class Image {
 
     private String src;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
 
 }

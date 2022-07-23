@@ -5,7 +5,9 @@ import com.project.gameInfo.domain.enums.CommentStatus;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,11 +18,6 @@ public class Comment {
 
     @Column(name = "reply_id")
     private Long replyId;
-
-    @Column(name = "member_id")
-    private Long memberId;
-
-    private String nickname;
 
     private String content;
 
@@ -35,20 +32,30 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @OneToMany(mappedBy = "comment")
+    private List<CommentLike> commentLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "comment")
+    private List<CommentUnlike> commentUnlikes = new ArrayList<>();
+
     public Comment() {}
 
-    private Comment(CommentDto commentDto) {
+    private Comment(CommentDto commentDto, Post post, Member member) {
         this.replyId = commentDto.getReplyId();
-        this.memberId = commentDto.getMemberId();
-        this.nickname = commentDto.getNickname();
         this.content = commentDto.getContent();
         this.createDate = new Date();
         this.status = CommentStatus.ALIVE;
+        this.post = post;
+        this.member = member;
     }
 
 
-    public static Comment createComment(CommentDto commentDto) {
-        return new Comment(commentDto);
+    public static Comment createComment(CommentDto commentDto, Post post, Member member) {
+        return new Comment(commentDto, post, member);
     }
 
     public void updateComment(CommentDto commentDto) {

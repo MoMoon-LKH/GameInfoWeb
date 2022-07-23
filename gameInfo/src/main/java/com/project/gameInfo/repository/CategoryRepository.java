@@ -11,7 +11,4 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    @Query("select new com.project.gameInfo.controller.dto.CategoryDto(id, name, parentId) from Category " +
-            "( )")
-    List<CategoryDto> getBasicCategory(@Param("state") CategoryState categoryState);
 }

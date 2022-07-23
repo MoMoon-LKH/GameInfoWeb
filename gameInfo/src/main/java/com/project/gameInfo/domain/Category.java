@@ -5,6 +5,8 @@ import com.project.gameInfo.domain.enums.CategoryState;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,6 +22,9 @@ public class Category {
 
     @Enumerated(EnumType.STRING)
     private CategoryState state;
+
+    @OneToMany(mappedBy = "category")
+    private List<GamesCategory> gamesCategories = new ArrayList<>();
 
 
     public Category() {

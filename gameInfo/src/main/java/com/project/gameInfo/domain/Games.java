@@ -16,7 +16,7 @@ public class Games {
 
     private String name;
 
-    private String explain;
+    private String introduction;
 
     private String company;
 
@@ -35,6 +35,10 @@ public class Games {
 
     @OneToMany(mappedBy = "games")
     private List<GamesPlatform> gamesPlatforms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "games")
+    private List<GamesCategory> gamesCategories = new ArrayList<>();
+
 
 
 }
