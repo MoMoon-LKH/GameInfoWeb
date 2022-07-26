@@ -1,6 +1,8 @@
 package com.project.gameInfo.domain;
 
+import com.project.gameInfo.controller.dto.GamesDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Games {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +32,8 @@ public class Games {
     @OneToMany(mappedBy = "games")
     private List<ReviewScore> reviewScores = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "genre_id")
-    private Genre genre;
+    @OneToMany(mappedBy = "games")
+    private List<GamesGenre> gamesGenres = new ArrayList<>();
 
     @OneToMany(mappedBy = "games")
     private List<GamesPlatform> gamesPlatforms = new ArrayList<>();
@@ -39,6 +41,18 @@ public class Games {
     @OneToMany(mappedBy = "games")
     private List<GamesCategory> gamesCategories = new ArrayList<>();
 
+
+    private Games(GamesDto gamesDto){
+        this.name = gamesDto.getName();
+        this.introduction = gamesDto.getIntroduction();
+        this.company = gamesDto.getCompany();
+        this.releaseDate = gamesDto.getReleaseDate();
+        this.createDate = new Date();
+    }
+
+    public static Games createGames(GamesDto gamesDto) {
+        return new Games(gamesDto);
+    }
 
 
 }

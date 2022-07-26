@@ -8,6 +8,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'org.asciidoctor.convert' version '1.5.8'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 	id 'java'
 }
 
@@ -56,4 +57,24 @@ tasks.named('test') {
 tasks.named('asciidoctor') {
 	inputs.dir snippetsDir
 	dependsOn test
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl { // jpa 사용여부와 사용할 경로 지정
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+
+sourceSets { // build 시 사용할 sourceSet을 추가
+	main.java.srcDir querydslDir
+}
+
+configurations { // querydsl이 compileClassPath을 상속
+	querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl { // 컴파일 속성
+	options.annotationProcessorPath = configurations.querydsl
 }

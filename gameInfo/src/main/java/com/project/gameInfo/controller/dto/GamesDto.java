@@ -18,5 +18,5 @@ public class GamesDto {
     private int reviewScore;
     private String genre;
     private String platform;
-
+    private String imgUrl;
 }
