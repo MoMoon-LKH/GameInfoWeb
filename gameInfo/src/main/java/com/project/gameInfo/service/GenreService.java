@@ -27,9 +27,8 @@ public class GenreService {
     }
 
     @Transactional
-    public Genre updateGenre(Genre genre, String name) {
+    public void updateGenre(Genre genre, String name) {
         genre.updateName(name);
-        return genre;
     }
 
     public Genre getById(Long id) {
@@ -37,6 +36,6 @@ public class GenreService {
     }
 
     public List<GenreDto> getListByPage(Pageable pageable) {
-        return genreCustomRepository.findAllByPage(pageable);
+        return genreRepository.findAllByPage(pageable);
     }
 }
