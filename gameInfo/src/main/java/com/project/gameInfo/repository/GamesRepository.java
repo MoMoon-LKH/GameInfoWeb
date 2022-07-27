@@ -1,8 +1,12 @@
 package com.project.gameInfo.repository;
 
 import com.project.gameInfo.domain.Games;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GamesRepository extends JpaRepository<Games, Long> {
+import java.util.List;
 
+public interface GamesRepository extends JpaRepository<Games, Long>, CustomGamesRepository {
+
+    List<Games> findAllBy(Pageable pageable);
 }

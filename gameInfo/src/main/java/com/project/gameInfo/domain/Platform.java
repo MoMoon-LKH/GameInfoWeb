@@ -18,4 +18,13 @@ public class Platform {
 
     @OneToMany(mappedBy = "platform")
     private List<GamesPlatform> gamesPlatforms = new ArrayList<>();
+
+
+    public Platform(String name) {
+        this.name = name;
+    }
+
+    public Platform() {
+
+    }
 }

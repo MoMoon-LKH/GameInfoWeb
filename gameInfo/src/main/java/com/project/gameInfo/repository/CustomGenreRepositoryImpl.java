@@ -1,6 +1,9 @@
 package com.project.gameInfo.repository;
 
 import com.project.gameInfo.controller.dto.GenreDto;
+import com.project.gameInfo.domain.Genre;
+import com.project.gameInfo.domain.QGames;
+import com.project.gameInfo.domain.QGamesGenre;
 import com.project.gameInfo.domain.QGenre;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -30,5 +33,14 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository{
 
     }
 
+    @Override
+    public List<Genre> findAllByGamesId(Long id) {
+        QGenre genre = QGenre.genre;
+        QGamesGenre gamesGenre = QGamesGenre.gamesGenre;
 
+        return jpaQueryFactory.selectFrom(genre)
+                .join(gamesGenre)
+                .where(gamesGenre.games.id.eq(id))
+                .fetch();
+    }
 }

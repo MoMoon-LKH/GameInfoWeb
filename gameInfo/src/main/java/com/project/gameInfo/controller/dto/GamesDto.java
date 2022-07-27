@@ -16,7 +16,7 @@ public class GamesDto {
     private String company;
     private Date releaseDate;
     private int reviewScore;
-    private String genre;
+    private String genres;
     private String platform;
     private String imgUrl;
 }

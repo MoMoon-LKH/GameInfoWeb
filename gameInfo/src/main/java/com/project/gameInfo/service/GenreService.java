@@ -38,4 +38,8 @@ public class GenreService {
     public List<GenreDto> getListByPage(Pageable pageable) {
         return genreRepository.findAllByPage(pageable);
     }
+
+    public List<Genre> findAllByGamesId(Long id) {
+        return genreRepository.findAllByGamesId(id);
+    }
 }

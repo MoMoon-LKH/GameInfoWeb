@@ -18,4 +18,9 @@ public class GamesPlatform {
     @ManyToOne
     @JoinColumn(name = "platform_id")
     private Platform platform;
+
+    public GamesPlatform(Games games, Platform platform) {
+        this.games = games;
+        this.platform = platform;
+    }
 }
