@@ -47,7 +47,7 @@ class GenreRepositoryTest {
     public void getGenreByPageable() {
 
         //given
-        Pageable pageable = PageRequest.of(0, 10);
+        Pageable pageable = PageRequest.of(0, 2);
         Pageable pageable2 = PageRequest.of(0, 1);
         Pageable pageable3 = PageRequest.of(1, 10);
         Genre genre1 = new Genre("테스트");
@@ -64,7 +64,6 @@ class GenreRepositoryTest {
         assertThat(list1.size()).isEqualTo(2);
         assertThat(list2.size()).isEqualTo(1);
         assertThat(list3.size()).isEqualTo(0);
-        assertThat(list1.get(0).getName()).isEqualTo("테스트");
 
     }
 
