@@ -1,5 +1,6 @@
 package com.project.gameInfo.domain;
 
+import com.project.gameInfo.controller.dto.CreateGameDto;
 import com.project.gameInfo.controller.dto.GamesDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +43,7 @@ public class Games {
     private List<GamesCategory> gamesCategories = new ArrayList<>();
 
 
-    private Games(GamesDto gamesDto){
+    private Games(CreateGameDto gamesDto){
         this.name = gamesDto.getName();
         this.introduction = gamesDto.getIntroduction();
         this.company = gamesDto.getCompany();
@@ -50,7 +51,7 @@ public class Games {
         this.createDate = new Date();
     }
 
-    public static Games createGames(GamesDto gamesDto) {
+    public static Games createGames(CreateGameDto gamesDto) {
         return new Games(gamesDto);
     }
 

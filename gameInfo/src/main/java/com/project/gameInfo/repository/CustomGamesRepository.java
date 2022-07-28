@@ -8,4 +8,5 @@ import java.util.List;
 public interface CustomGamesRepository {
 
     List<GamesDto> findAllByPage(Pageable pageable);
+    GamesDto findDtoById(Long id);
 }

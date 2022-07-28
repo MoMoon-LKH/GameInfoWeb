@@ -22,4 +22,8 @@ public class GamesPlatformService {
         return gamesPlatformRepository.save(new GamesPlatform(games, platform)).getId();
     }
 
+    public String findPlatformsByGamesId(Long id) {
+        return gamesPlatformRepository.findPlatformsByGamesId(id).replace(",", " ");
+    }
+
 }

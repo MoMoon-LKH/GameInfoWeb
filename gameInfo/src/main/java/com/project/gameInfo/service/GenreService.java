@@ -31,7 +31,7 @@ public class GenreService {
         genre.updateName(name);
     }
 
-    public Genre getById(Long id) {
+    public Genre findById(Long id) {
         return genreRepository.findById(id).orElseThrow(NoSuchFieldError::new);
     }
 

@@ -32,7 +32,7 @@ public class GenreController {
 
     @PutMapping("/manage/genre/update")
     public ResponseEntity<?> updateGenre(@RequestBody GenreDto genreDto) {
-        Genre genre = genreService.getById(genreDto.getId());
+        Genre genre = genreService.findById(genreDto.getId());
         genreService.updateGenre(genre, genreDto.getName());
 
         return ResponseEntity.ok(GenreDto.builder()

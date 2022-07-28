@@ -2,6 +2,7 @@ package com.project.gameInfo.service;
 
 import com.project.gameInfo.controller.dto.GamesDto;
 import com.project.gameInfo.domain.Games;
+import com.project.gameInfo.exception.NotFoundGameException;
 import com.project.gameInfo.repository.GamesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -25,8 +26,14 @@ public class GamesService {
 
 
     public List<GamesDto> findAllByPage(Pageable pageable) {
+        return gamesRepository.findAllByPage(pageable);
+    }
 
+    public Games findById(Long id) {
+        return gamesRepository.findById(id).orElseThrow(NotFoundGameException::new);
+    }
 
-        return new ArrayList<>();
+    public GamesDto findDtoById(Long id) {
+        return gamesRepository.findDtoById(id);
     }
 }

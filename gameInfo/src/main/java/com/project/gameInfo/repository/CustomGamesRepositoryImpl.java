@@ -1,10 +1,7 @@
 package com.project.gameInfo.repository;
 
 import com.project.gameInfo.controller.dto.GamesDto;
-import com.project.gameInfo.domain.QGames;
-import com.project.gameInfo.domain.QGenre;
-import com.project.gameInfo.domain.QReviewScore;
-import com.project.gameInfo.domain.ReviewScore;
+import com.project.gameInfo.domain.*;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -26,23 +23,37 @@ public class CustomGamesRepositoryImpl implements CustomGamesRepository {
     public List<GamesDto> findAllByPage(Pageable pageable) {
         QGames games = QGames.games;
         QReviewScore reviewScore = QReviewScore.reviewScore;
-        QGenre qGenre = QGenre.genre;
 
 
         return queryFactory
-                .select(Projections.constructor(GamesDto.class,
+                .select(Projections.bean(GamesDto.class,
                         games.id,
                         games.name,
                         games.introduction,
                         games.company,
-                        games.releaseDate,
-                        reviewScore.score.avg(),
-                        null,
-                        null,
-                        null
+                        games.releaseDate
                 ))
                 .from(games)
-                .innerJoin(reviewScore)
                 .fetch();
+    }
+
+
+    @Override
+    public GamesDto findDtoById(Long id) {
+        QGames games = QGames.games;
+        QReviewScore reviewScore = QReviewScore.reviewScore;
+
+        return queryFactory
+                .select(Projections.bean(GamesDto.class,
+                        games.id,
+                        games.name,
+                        games.introduction,
+                        games.company,
+                        games.releaseDate
+                ))
+                .from(games)
+                .where(games.id.eq(id))
+                .fetchFirst();
+
     }
 }

@@ -21,4 +21,8 @@ public class GamesGenreService {
         return gamesGenreRepository.save(new GamesGenre(games, genre)).getId();
     }
 
+    public String findGenresByGamesId(Long id) {
+        return gamesGenreRepository.findGenresByGamesId(id).replace(",", " ");
+    }
+
 }

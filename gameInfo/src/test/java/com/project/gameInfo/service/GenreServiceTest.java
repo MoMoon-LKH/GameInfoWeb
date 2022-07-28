@@ -58,7 +58,7 @@ class GenreServiceTest {
         when(genreRepository.findById(save)).thenReturn(Optional.of(genre));
 
         //when
-        Genre find = genreService.getById(save);
+        Genre find = genreService.findById(save);
 
         //then
         assertThat(genre).isSameAs(find);
