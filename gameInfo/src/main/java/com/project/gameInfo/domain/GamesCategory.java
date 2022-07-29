@@ -19,4 +19,10 @@ public class GamesCategory {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+
+    public GamesCategory(Games games, Category category) {
+        this.games = games;
+        this.category = category;
+    }
 }

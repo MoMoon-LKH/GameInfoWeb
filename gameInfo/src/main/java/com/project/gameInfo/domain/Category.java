@@ -2,6 +2,7 @@ package com.project.gameInfo.domain;
 
 import com.project.gameInfo.controller.dto.CategoryDto;
 import com.project.gameInfo.domain.enums.CategoryState;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -34,6 +35,13 @@ public class Category {
         this.name = categoryDto.getName();
         this.parentId = categoryDto.getParentId();
         this.state = CategoryState.ALIVE;
+    }
+
+    public Category(Long id, String name, Long parentId, CategoryState state) {
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
+        this.state = state;
     }
 
 
