@@ -14,6 +14,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class CreatePostDto {
 
+    private Long id;
+
     @NotNull
     private String title;
 

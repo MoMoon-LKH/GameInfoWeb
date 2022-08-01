@@ -1,5 +1,6 @@
 package com.project.gameInfo.controller.dto;
 
+import com.project.gameInfo.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +28,20 @@ public class PostDto {
     @NotNull
     private Long categoryId;
 
+
     @NotNull
     private Long memberId;
+
+    private String nickname;
+
+    public PostDto(Post post) {
+        this.id = post.getId();
+        this.title = post.getTitle();
+        this.content = post.getContent();
+        this.createDate = post.getCreateDate();
+        this.categoryId = post.getCategory().getId();
+        this.memberId = post.getMember().getId();
+        this.nickname = post.getMember().getNickname();
+
+    }
 }
