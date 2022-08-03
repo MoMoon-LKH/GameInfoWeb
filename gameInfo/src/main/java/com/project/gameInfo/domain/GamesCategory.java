@@ -2,11 +2,13 @@ package com.project.gameInfo.domain;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity(name = "games_category")
 @Getter
+@NoArgsConstructor
 public class GamesCategory {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,7 @@ public class GamesCategory {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
 
 
     public GamesCategory(Games games, Category category) {

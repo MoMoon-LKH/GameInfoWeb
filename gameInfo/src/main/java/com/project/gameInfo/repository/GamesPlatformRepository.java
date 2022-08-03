@@ -14,4 +14,7 @@ public interface GamesPlatformRepository extends JpaRepository<GamesPlatform, Lo
             "having ga.id = :id"
     )
     String findPlatformsByGamesId(@Param("id") Long id);
+
+
+
 }
