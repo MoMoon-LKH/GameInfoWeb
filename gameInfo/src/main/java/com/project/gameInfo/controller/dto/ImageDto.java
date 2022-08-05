@@ -11,7 +11,9 @@ public class ImageDto {
 
     private Long id;
 
-    private String origin_name;
+    private String originName;
 
     private String url;
+
+
 }

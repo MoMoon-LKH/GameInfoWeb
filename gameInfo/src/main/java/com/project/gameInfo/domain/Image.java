@@ -11,7 +11,8 @@ public class Image {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String origin_name;
+    @Column(name = "origin_name")
+    private String originName;
 
     private String url;
 
@@ -21,12 +22,12 @@ public class Image {
     }
 
     public Image(String origin_name, String url) {
-        this.origin_name = origin_name;
+        this.originName = origin_name;
         this.url = url;
     }
 
-    public static Image createImage(String origin_name ,String url) {
-        return new Image(origin_name, url);
+    public static Image createImage(String originName ,String url) {
+        return new Image(originName, url);
     }
 
 }

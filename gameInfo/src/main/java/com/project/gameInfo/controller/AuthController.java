@@ -68,12 +68,14 @@ public class AuthController {
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24 * 7);
         response.addCookie(cookie);
 
         Map<String, String> map = new HashMap<>();
         map.put("message", "Login Success");
         map.put("id", member.getMemberId());
         map.put("nickname", member.getNickname());
+        map.put("accessToken", access);
 
 
         return ResponseEntity.ok(map);

@@ -1,4 +1,4 @@
-package com.project.gameInfo.service;
+package com.project.gameInfo.jwt;
 
 
 import com.project.gameInfo.domain.Member;
@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private User createUser(Member member) {
         List<GrantedAuthority> grantedAuthorities =
                 member.getRoleList()
-                        .stream().map(SimpleGrantedAuthority::new)
+                        .stream().map(m -> new SimpleGrantedAuthority("ROLE_" + m))
                         .collect(Collectors.toList());
 
         return new User(member.getMemberId(), member.getPassword(), grantedAuthorities);

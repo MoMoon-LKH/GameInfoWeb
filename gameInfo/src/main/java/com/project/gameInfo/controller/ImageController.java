@@ -7,12 +7,10 @@ import com.project.gameInfo.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.security.RolesAllowed;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -34,19 +32,19 @@ public class ImageController {
         Image image = uploadImage(file);
 
         if (image != null) {
-            imageService.save(image);
+            Long save = imageService.save(image);
 
             return ResponseEntity.ok(ImageDto.builder()
                     .id(image.getId())
-                    .origin_name(image.getOrigin_name())
-                    .url(image.getUrl())
+                    .originName(image.getOriginName())
+                    .url(image.getUrl()).build()
             );
 
         } else{
+
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미지 파일이 아닙니다.");
         }
     }
-
 
     public Image uploadImage(MultipartFile file) throws IOException{
 
