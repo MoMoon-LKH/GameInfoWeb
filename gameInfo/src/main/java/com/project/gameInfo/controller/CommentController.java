@@ -13,14 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class CommentController {
 
     private final CommentService commentService;
@@ -28,22 +28,69 @@ public class CommentController {
     private final PostService postService;
 
 
-    @PostMapping("/comment")
-    public ResponseEntity<?> saveComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user) {
+
+    @GetMapping("/all/comment/{postId}")
+    public ResponseEntity<?> getPostComments(@PathVariable("postId") Long postId) {
+
+        List<Comment> comments = commentService.findAllByPostId(postId);
+        List<CommentDto> commentDtos = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            commentDtos.add(convertCommentDto(comment));
+        }
+
+        return ResponseEntity.ok(commentDtos);
+    }
+
+
+    @PostMapping("/user/comment")
+    public ResponseEntity<?> createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user) {
 
         Member member = memberService.findMemberByMemberId(user.getUsername());
         Post post = postService.findById(commentDto.getPostId());
 
-        if (commentDto.getMemberId().equals(member.getId())) {
+        if (user.getUsername().equals(member.getMemberId())) {
             Comment comment = Comment.createComment(commentDto, post, member);
             commentService.save(comment);
 
             return ResponseEntity.ok(convertCommentDto(comment));
 
         } else{
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("해당 권한이 없습니다.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("작성자와 해당 유저가 다릅니다.");
         }
 
+    }
+
+    @PutMapping("/user/comment")
+    public ResponseEntity<?> updateComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user) {
+
+        Member member = memberService.findMemberByMemberId(user.getUsername());
+
+        if (user.getUsername().equals(member.getMemberId())) {
+            Comment comment = commentService.findById(commentDto.getId());
+            commentService.updateComment(comment, commentDto);
+
+            return ResponseEntity.ok(convertCommentDto(comment));
+        }
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("해당 작성자에 대한 접근 권한이 없습니다.");
+    }
+
+
+    @DeleteMapping("/user/comment")
+    public ResponseEntity<?> deleteComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user) {
+
+        Member member = memberService.findMemberByMemberId(user.getUsername());
+
+        if (user.getUsername().equals(member.getMemberId())) {
+            Comment comment = commentService.findById(commentDto.getId());
+            commentService.deleteComment(comment);
+
+            return ResponseEntity.ok("삭제가 정상적으로 이루어졌습니다.");
+
+        }
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("해당 작성자에 대한 접근 권한이 없습니다.");
     }
 
 

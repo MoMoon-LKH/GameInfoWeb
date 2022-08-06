@@ -9,11 +9,15 @@ import com.project.gameInfo.service.CategoryService;
 import com.project.gameInfo.service.MemberService;
 import com.project.gameInfo.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,12 +37,18 @@ public class PostController {
         Member member = memberService.findMemberByMemberId(user.getUsername());
         Category category = categoryService.findByCategoryId(postDto.getCategoryId());
 
-        Post post = Post.createPost(postDto, category, member);
+        if (user.getUsername().equals(member.getMemberId())) {
 
-        postService.save(post);
+            Post post = Post.createPost(postDto, category, member);
 
-        return ResponseEntity.ok(new PostDto(post));
+            postService.save(post);
+
+            return ResponseEntity.ok(new PostDto(post));
+        }
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("해당 유저와 작성자가 다르므로 권한이 없습니다.");
     }
+
 
     @GetMapping("/all/post/{postId}")
     public ResponseEntity<?> getPost(@PathVariable("postId") Long id) {
@@ -46,10 +56,18 @@ public class PostController {
         return ResponseEntity.ok(new PostDto(postService.findById(id)));
     }
 
-    @GetMapping("/all/post/list")
-    public ResponseEntity<?> getPostList() {
 
-        return ResponseEntity.ok("");
+    @GetMapping("/all/post/list")
+    public ResponseEntity<?> getPostList(@RequestParam("categoryId") Long categoryId) {
+
+        List<Post> posts = postService.findAllByCategoryId(categoryId);
+        List<PostDto> postDtos = new ArrayList<>();
+
+        for (Post post : posts) {
+            postDtos.add(new PostDto(post));
+        }
+
+        return ResponseEntity.ok(postDtos);
     }
 
 
@@ -67,7 +85,7 @@ public class PostController {
             return ResponseEntity.ok(new PostDto(post));
         }
 
-        return ResponseEntity.ok("권한이 없습니다.");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("해당 게시물에 대한 권한이 없습니다.");
 
     }
 
@@ -84,7 +102,7 @@ public class PostController {
             return ResponseEntity.ok("삭제 완료");
         }
 
-        return ResponseEntity.ok("권한이 없습니다.");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("해당 게시물에 대한 권한이 없습니다.");
     }
 
 

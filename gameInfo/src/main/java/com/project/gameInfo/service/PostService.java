@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,5 +38,9 @@ public class PostService {
 
     public Post findById(Long id) {
         return postRepository.findById(id).orElseThrow(NotFoundPostException::new);
+    }
+
+    public List<Post> findAllByCategoryId(Long id) {
+        return postRepository.findAllByCategoryIdOrderByCreateDateDesc(id);
     }
 }
