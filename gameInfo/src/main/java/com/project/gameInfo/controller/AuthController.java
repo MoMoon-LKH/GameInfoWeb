@@ -81,7 +81,7 @@ public class AuthController {
         return ResponseEntity.ok(map);
     }
 
-    @PostMapping("/re-access")
+    @PostMapping("/re-access") // 보완화된 cookie를 쓰기위해서는 https 설정이 필요함
     public ResponseEntity<?> reAuthorize(HttpServletResponse response, @CookieValue(value = "gameInfo") Cookie cookie) {
 
         if(cookie != null) {

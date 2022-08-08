@@ -27,7 +27,6 @@ public class GamesController {
     private final PlatformService platformService;
     private final GamesGenreService gamesGenreService;
     private final GenreService genreService;
-
     private final ReviewScoreService reviewScoreService;
 
 

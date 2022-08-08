@@ -34,6 +34,11 @@ public class CommentService {
         comment.deleteComment();
     }
 
+    @Transactional
+    public void deletePostComment(List<Comment> list) {
+        commentRepository.deleteAll(list);
+    }
+
     public Comment findById(Long id) {
         return commentRepository.findById(id).orElseThrow(NotFoundCommentException::new);
     }

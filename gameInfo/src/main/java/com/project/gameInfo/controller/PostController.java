@@ -3,9 +3,11 @@ package com.project.gameInfo.controller;
 import com.project.gameInfo.controller.dto.CreatePostDto;
 import com.project.gameInfo.controller.dto.PostDto;
 import com.project.gameInfo.domain.Category;
+import com.project.gameInfo.domain.Comment;
 import com.project.gameInfo.domain.Member;
 import com.project.gameInfo.domain.Post;
 import com.project.gameInfo.service.CategoryService;
+import com.project.gameInfo.service.CommentService;
 import com.project.gameInfo.service.MemberService;
 import com.project.gameInfo.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,8 @@ public class PostController {
     private final MemberService memberService;
 
     private final CategoryService categoryService;
+
+    private final CommentService commentService;
 
 
     @PostMapping("/user/post")
@@ -57,8 +61,8 @@ public class PostController {
     }
 
 
-    @GetMapping("/all/post/list")
-    public ResponseEntity<?> getPostList(@RequestParam("categoryId") Long categoryId) {
+    @GetMapping("/all/post/list/{categoryId}")
+    public ResponseEntity<?> getPostList(@PathVariable("categoryId") Long categoryId) {
 
         List<Post> posts = postService.findAllByCategoryId(categoryId);
         List<PostDto> postDtos = new ArrayList<>();
@@ -97,6 +101,8 @@ public class PostController {
 
         if (member.getId().equals(postDto.getMemberId())) {
             Post post = postService.findById(postDto.getId());
+            List<Comment> comments = commentService.findAllByPostId(postDto.getId());
+            commentService.deletePostComment(comments);
             postService.delete(post);
 
             return ResponseEntity.ok("삭제 완료");
