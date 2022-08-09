@@ -14,6 +14,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +29,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -38,7 +41,7 @@ public class AuthController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<?> authorize(@Valid @RequestBody LoginDto loginDto, HttpServletResponse response) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getMemberId(), loginDto.getPassword());
@@ -81,7 +84,7 @@ public class AuthController {
         return ResponseEntity.ok(map);
     }
 
-    @PostMapping("/re-access") // 보완화된 cookie를 쓰기위해서는 https 설정이 필요함
+    @PostMapping("/auth/re-access") // 보안화된 cookie를 쓰기위해서는 https 설정이 필요함
     public ResponseEntity<?> reAuthorize(HttpServletResponse response, @CookieValue(value = "gameInfo") Cookie cookie) {
 
         if(cookie != null) {
@@ -92,6 +95,28 @@ public class AuthController {
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("RefreshToken Not Found");
+    }
+
+
+    @PostMapping("/user/logout")
+    public ResponseEntity<?> logout(
+            @AuthenticationPrincipal User user,
+            @CookieValue(value = "gameInfo") Cookie cookie,
+            HttpServletResponse response) {
+
+        Member member = memberService.findMemberByMemberId(user.getUsername());
+        Optional<RefreshToken> refreshToken = refreshTokenService.findByMemberId(member.getId());
+
+        if (refreshToken.isPresent()) {
+            refreshTokenService.delete(refreshToken.get());
+        }
+
+        Cookie delete = new Cookie(cookie.getName(), null);
+        delete.setMaxAge(0);
+        response.addCookie(delete);
+
+        return ResponseEntity.ok("로그아웃이 성공적으로 이루어졌습니다.");
+
     }
 
 
