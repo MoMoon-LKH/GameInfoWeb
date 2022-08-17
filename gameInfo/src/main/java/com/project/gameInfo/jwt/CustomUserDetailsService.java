@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -33,7 +35,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(m -> createUser(m))
                 .orElseThrow(NotFindMemberException::new);
     }
-
+    // 컨트롤러에서 AuthenticationManager.authenticate(Authentication) 호출 시
+    // DaoAuthenticationProvider -> passwordEncoder.matches()을 통해 패스워드 체크
 
     private User createUser(Member member) {
         List<GrantedAuthority> grantedAuthorities =

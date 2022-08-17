@@ -4,6 +4,7 @@ import com.project.gameInfo.controller.dto.LoginDto;
 import com.project.gameInfo.controller.dto.TokenDto;
 import com.project.gameInfo.domain.Member;
 import com.project.gameInfo.domain.RefreshToken;
+import com.project.gameInfo.domain.enums.MemberStatus;
 import com.project.gameInfo.jwt.TokenProvider;
 import com.project.gameInfo.service.MemberService;
 import com.project.gameInfo.service.RefreshTokenService;
@@ -14,6 +15,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -43,11 +46,13 @@ public class AuthController {
 
     @PostMapping("/auth/login")
     public ResponseEntity<?> authorize(@Valid @RequestBody LoginDto loginDto, HttpServletResponse response) {
+        
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getMemberId(), loginDto.getPassword());
 
         Authentication authentication =
                 authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        // CustomUserDetailService.loadUserByUsername 실행
 
         String access = tokenProvider.createAccessToken(authentication);
         String refresh = tokenProvider.createRefreshToken(authentication);
@@ -74,9 +79,9 @@ public class AuthController {
         cookie.setMaxAge(60 * 60 * 24 * 7);
         response.addCookie(cookie);
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("message", "Login Success");
-        map.put("id", member.getMemberId());
+        map.put("id", member.getId());
         map.put("nickname", member.getNickname());
         map.put("accessToken", access);
 
@@ -107,9 +112,7 @@ public class AuthController {
         Member member = memberService.findMemberByMemberId(user.getUsername());
         Optional<RefreshToken> refreshToken = refreshTokenService.findByMemberId(member.getId());
 
-        if (refreshToken.isPresent()) {
-            refreshTokenService.delete(refreshToken.get());
-        }
+        refreshToken.ifPresent(refreshTokenService::delete);
 
         Cookie delete = new Cookie(cookie.getName(), null);
         delete.setMaxAge(0);
@@ -117,6 +120,17 @@ public class AuthController {
 
         return ResponseEntity.ok("로그아웃이 성공적으로 이루어졌습니다.");
 
+    }
+
+    @GetMapping("/user/is-manage")
+    public ResponseEntity<?> getAuthority(@AuthenticationPrincipal User user){
+
+        Member member = memberService.findMemberByMemberId(user.getUsername());
+        
+        if(member.getRoles().equals("MANAGE") || member.getRoles().equals("ADMIN"))
+            return ResponseEntity.ok(true);
+
+        return ResponseEntity.ok(false);
     }
 
 

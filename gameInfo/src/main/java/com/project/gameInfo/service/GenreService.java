@@ -39,6 +39,10 @@ public class GenreService {
         return genreRepository.findAllByPage(pageable);
     }
 
+    public List<Genre> findAllByName(String search, Pageable pageable) {
+        return genreRepository.findAllByNameOrderByNameAsc(search, pageable);
+    }
+
     public List<Genre> findAllByGamesId(Long id) {
         return genreRepository.findAllByGamesId(id);
     }

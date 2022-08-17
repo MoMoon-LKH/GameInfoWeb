@@ -26,7 +26,7 @@ public class GenreController {
     }
 
     @GetMapping("/manage/genre/list")
-    public ResponseEntity<?> genreList(@PageableDefault(size = 15) Pageable pageable) {
+    public ResponseEntity<?> genreList(@PageableDefault(size = 20) Pageable pageable) {
         return ResponseEntity.ok(genreService.getListByPage(pageable));
     }
 
@@ -39,6 +39,12 @@ public class GenreController {
                 .id(genre.getId())
                 .name(genre.getName())
                 .build());
+    }
+
+    @GetMapping("/manage/genre/search")
+    public ResponseEntity<?> searchGenres(@RequestParam("search") String search ,@PageableDefault(size = 20) Pageable pageable) {
+
+        return ResponseEntity.ok(genreService.findAllByName(search, pageable));
     }
 
 }

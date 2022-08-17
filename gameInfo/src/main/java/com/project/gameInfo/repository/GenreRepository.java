@@ -13,5 +13,6 @@ import java.util.List;
 public interface GenreRepository extends JpaRepository<Genre, Long>, CustomGenreRepository {
 
 
+    List<Genre> findAllByNameOrderByNameAsc(@Param("name") String name, Pageable pageable);
 
 }
