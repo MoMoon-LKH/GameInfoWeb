@@ -39,8 +39,8 @@ public class RefreshTokenService {
     }
 
     @Transactional
-    public void update(RefreshToken refreshToken, String token) {
-        refreshToken.update(token);
+    public void update(RefreshToken refreshToken, String refresh, String access) {
+        refreshToken.update(refresh, access);
     }
 
     public Optional<RefreshToken> findByMemberId(Long id) {
@@ -57,18 +57,16 @@ public class RefreshTokenService {
 
         if (refreshToken.getAccessToken().equals(access)) {
 
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(refreshToken.getMember().getMemberId(), refreshToken.getMember().getPassword());
-
             try {
-                Authentication authentication =
-                        authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
+                Authentication authentication = tokenProvider.getRefreshAuthentication(refresh);
+                System.out.println("authentication = " + authentication);
                 accessToken = tokenProvider.createAccessToken(authentication);
+
             } catch (Exception e) {
                 throw new BadCredentialsException("해당 사용자 정보가 없습니다.");
             }
 
+            refreshToken.updateAccessToken(accessToken);
             return accessToken;
 
         } else{

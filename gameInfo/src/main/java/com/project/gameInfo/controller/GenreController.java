@@ -22,7 +22,7 @@ public class GenreController {
 
         Long save = genreService.save(genre);
 
-        return ResponseEntity.ok(save);
+        return ResponseEntity.ok(genre.getName());
     }
 
     @GetMapping("/manage/genre/list")

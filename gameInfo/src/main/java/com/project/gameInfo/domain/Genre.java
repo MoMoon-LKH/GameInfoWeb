@@ -1,5 +1,6 @@
 package com.project.gameInfo.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -40,7 +40,7 @@ public class TokenProvider implements InitializingBean {
     public TokenProvider(
             @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds,
             @Value("${jwt.refresh-validity-date}") int refreshValidDate) {
-        this.tokenValidityInSeconds = tokenValidityInSeconds * 1000;
+        this.tokenValidityInSeconds = tokenValidityInSeconds * 1000; //개발 동안
         this.refreshValidDate = refreshValidDate;
     }
 
@@ -92,6 +92,23 @@ public class TokenProvider implements InitializingBean {
         Claims claims = Jwts
                 .parserBuilder()
                 .setSigningKey(key)
+                .build().parseClaimsJws(token)
+                .getBody();
+
+        Collection<GrantedAuthority> authorities =
+                Arrays.stream(claims.get("auth").toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        User user = new User(claims.get("username").toString(), "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(user, token, authorities);
+    }
+
+    public Authentication getRefreshAuthentication(String token) {
+        Claims claims = Jwts
+                .parserBuilder()
+                .setSigningKey(refreshKey)
                 .build().parseClaimsJws(token)
                 .getBody();
 

@@ -62,9 +62,9 @@ public class AuthController {
 
 
         if (refreshToken.isPresent()) {
-            refreshTokenService.update(refreshToken.get(), refresh);
+            refreshTokenService.update(refreshToken.get(), refresh, access);
         }else{
-            RefreshToken newRefresh = RefreshToken.createRefreshToken(refresh, member);
+            RefreshToken newRefresh = RefreshToken.createRefreshToken(refresh, access, member);
             refreshTokenService.save(newRefresh);
         }
 
@@ -90,10 +90,13 @@ public class AuthController {
     }
 
     @PostMapping("/auth/re-access") // 보안화된 cookie를 쓰기위해서는 https 설정이 필요함
-    public ResponseEntity<?> reAuthorize(HttpServletResponse response, @CookieValue(value = "gameInfo") Cookie cookie) {
+    public ResponseEntity<?> reAuthorize(HttpServletRequest request, HttpServletResponse response, @CookieValue(value = "gameInfo") Cookie cookie) {
 
-        if(cookie != null) {
-            String accessToken = refreshTokenService.generateAccessTokenFromRefreshToken(cookie.getValue(), response.getHeader("Authorization").replace("Bearer " ,""));
+        String access = request.getHeader("Authorization");
+
+        if(access != null) {
+
+            String accessToken = refreshTokenService.generateAccessTokenFromRefreshToken(cookie.getValue(), access.replace("Bearer " ,""));
             response.setHeader("Authorization", "Bearer " + accessToken);
 
             return ResponseEntity.ok("AccessToken refresh");
