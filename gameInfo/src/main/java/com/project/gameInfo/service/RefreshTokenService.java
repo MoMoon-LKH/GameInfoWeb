@@ -1,15 +1,12 @@
 package com.project.gameInfo.service;
 
 import com.project.gameInfo.domain.RefreshToken;
-import com.project.gameInfo.exception.NotFindMemberException;
 import com.project.gameInfo.exception.RefreshTokenSecurityException;
-import com.project.gameInfo.exception.TokenNotFoundException;
+import com.project.gameInfo.exception.NotFoundTokenException;
 import com.project.gameInfo.jwt.TokenProvider;
 import com.project.gameInfo.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -43,30 +40,38 @@ public class RefreshTokenService {
         refreshToken.update(refresh, access);
     }
 
+    @Transactional
+    public void accessUpdate(RefreshToken refreshToken, String access){
+        refreshToken.updateAccessToken(access);
+    }
+
     public Optional<RefreshToken> findByMemberId(Long id) {
         return refreshTokenRepository.findByMember_Id(id);
     }
 
+    public RefreshToken findByRefreshToken(String refresh){
+
+        return refreshTokenRepository.findByRefreshToken(refresh).orElseThrow(() -> new NotFoundTokenException("Refresh Token Not Found"));
+    }
     @Transactional
     public String generateAccessTokenFromRefreshToken(String refresh, String access) {
 
         String accessToken;
 
         RefreshToken refreshToken = refreshTokenRepository.findByRefreshToken(refresh)
-                .orElseThrow(() -> new TokenNotFoundException("Refresh Token Not Found"));
+                .orElseThrow(() -> new NotFoundTokenException("Refresh Token Not Found"));
 
         if (refreshToken.getAccessToken().equals(access)) {
 
             try {
                 Authentication authentication = tokenProvider.getRefreshAuthentication(refresh);
-                System.out.println("authentication = " + authentication);
                 accessToken = tokenProvider.createAccessToken(authentication);
+                refreshToken.updateAccessToken(accessToken);
 
             } catch (Exception e) {
                 throw new BadCredentialsException("해당 사용자 정보가 없습니다.");
             }
 
-            refreshToken.updateAccessToken(accessToken);
             return accessToken;
 
         } else{

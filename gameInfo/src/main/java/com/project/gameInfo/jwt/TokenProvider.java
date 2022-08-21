@@ -40,7 +40,7 @@ public class TokenProvider implements InitializingBean {
     public TokenProvider(
             @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds,
             @Value("${jwt.refresh-validity-date}") int refreshValidDate) {
-        this.tokenValidityInSeconds = tokenValidityInSeconds * 1000; //개발 동안
+        this.tokenValidityInSeconds = tokenValidityInSeconds * 100;
         this.refreshValidDate = refreshValidDate;
     }
 
@@ -129,10 +129,10 @@ public class TokenProvider implements InitializingBean {
                     .setSigningKey(key)
                     .build().parseClaimsJws(token);
             return true;
-        } catch (SecurityException | MalformedJwtException e) {
-            logger.info("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
-            logger.info("만료된 JWT 토큰입니다.");
+        logger.info("만료된 JWT 토큰입니다.");
+        } catch (SecurityException | MalformedJwtException e){
+        logger.info("잘못된 JWT 서명입니다.");
         } catch (UnsupportedJwtException e) {
             logger.info("지원하지않는 JWT 토큰입니다.");
         } catch (IllegalArgumentException e) {
