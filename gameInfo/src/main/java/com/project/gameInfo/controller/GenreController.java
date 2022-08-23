@@ -1,6 +1,7 @@
 package com.project.gameInfo.controller;
 
 import com.project.gameInfo.controller.dto.GenreDto;
+import com.project.gameInfo.controller.dto.GenreIdList;
 import com.project.gameInfo.domain.Genre;
 import com.project.gameInfo.service.GenreService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +33,7 @@ public class GenreController {
         return ResponseEntity.ok(genreService.getListByPage(pageable));
     }
 
-    @PutMapping("/manage/genre/update")
+    @PutMapping("/manage/genre")
     public ResponseEntity<?> updateGenre(@RequestBody GenreDto genreDto) {
         Genre genre = genreService.findById(genreDto.getId());
         genreService.updateGenre(genre, genreDto.getName());
@@ -39,6 +42,16 @@ public class GenreController {
                 .id(genre.getId())
                 .name(genre.getName())
                 .build());
+    }
+
+    @DeleteMapping("/manage/genre")
+    public ResponseEntity<?> deleteGenre(@RequestBody GenreIdList ids) {
+
+        List<Genre> genres = genreService.findAllByIds(ids.getIds());
+
+        boolean boolDelete = genreService.deleteAll(genres);
+
+        return ResponseEntity.ok(boolDelete);
     }
 
     @GetMapping("/manage/genre/search")

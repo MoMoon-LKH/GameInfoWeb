@@ -16,4 +16,6 @@ public interface GenreRepository extends JpaRepository<Genre, Long>, CustomGenre
 
     List<Genre> findAllByNameStartingWithOrderByNameAsc(String name, Pageable pageable);
 
+    @Query("select g from Genre g where g.id in :ids")
+    List<Genre> findByIds(@Param("ids") List<Long> ids);
 }

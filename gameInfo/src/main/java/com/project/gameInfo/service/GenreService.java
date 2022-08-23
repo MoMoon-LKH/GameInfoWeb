@@ -31,6 +31,16 @@ public class GenreService {
         genre.updateName(name);
     }
 
+    @Transactional
+    public boolean deleteAll(List<Genre> genres) {
+        try {
+            genreRepository.deleteAll(genres);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public Genre findById(Long id) {
         return genreRepository.findById(id).orElseThrow(NoSuchFieldError::new);
     }
@@ -41,6 +51,10 @@ public class GenreService {
 
     public List<Genre> findAllByName(String search, Pageable pageable) {
         return genreRepository.findAllByNameStartingWithOrderByNameAsc(search, pageable);
+    }
+
+    public List<Genre> findAllByIds(List<Long> ids) {
+        return genreRepository.findByIds(ids);
     }
 
     public List<Genre> findAllByGamesId(Long id) {
