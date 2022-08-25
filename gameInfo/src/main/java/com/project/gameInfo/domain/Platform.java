@@ -27,4 +27,8 @@ public class Platform {
     public Platform() {
 
     }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
 }

@@ -1,7 +1,7 @@
 package com.project.gameInfo.controller;
 
 import com.project.gameInfo.controller.dto.GenreDto;
-import com.project.gameInfo.controller.dto.GenreIdList;
+import com.project.gameInfo.controller.dto.IdList;
 import com.project.gameInfo.domain.Genre;
 import com.project.gameInfo.service.GenreService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -24,6 +25,7 @@ public class GenreController {
         Genre genre = new Genre(genreDto.getName());
 
         Long save = genreService.save(genre);
+
 
         return ResponseEntity.ok(genre.getName());
     }
@@ -45,7 +47,7 @@ public class GenreController {
     }
 
     @DeleteMapping("/manage/genre")
-    public ResponseEntity<?> deleteGenre(@RequestBody GenreIdList ids) {
+    public ResponseEntity<?> deleteGenre(@RequestBody IdList ids) {
 
         List<Genre> genres = genreService.findAllByIds(ids.getIds());
 

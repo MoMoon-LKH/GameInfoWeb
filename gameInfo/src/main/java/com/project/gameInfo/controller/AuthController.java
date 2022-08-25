@@ -109,7 +109,6 @@ public class AuthController {
     @PostMapping("/user/logout")
     public ResponseEntity<?> logout(
             @AuthenticationPrincipal User user,
-            @CookieValue(value = "gameInfo") Cookie cookie,
             HttpServletResponse response) {
 
         Member member = memberService.findMemberByMemberId(user.getUsername());
@@ -117,8 +116,12 @@ public class AuthController {
 
         refreshToken.ifPresent(refreshTokenService::delete);
 
-        Cookie delete = new Cookie(cookie.getName(), null);
+        Cookie delete = new Cookie("gameInfo", null);
+        delete.setSecure(true);
+        delete.setHttpOnly(true);
+        delete.setPath("/");
         delete.setMaxAge(0);
+
         response.addCookie(delete);
 
         return ResponseEntity.ok("로그아웃이 성공적으로 이루어졌습니다.");

@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class GenreIdList {
+public class IdList {
     private List<Long> ids;
 }
