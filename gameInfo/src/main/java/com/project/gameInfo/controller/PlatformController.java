@@ -45,12 +45,13 @@ public class PlatformController {
 
         Platform platform = platformService.findById(platformDto.getId());
 
-        platform.updateName(platformDto.getName());
+        platformService.updatePlatform(platform, platformDto.getName());
 
         return ResponseEntity.ok(
                 PlatformDto.builder()
                         .id(platform.getId())
                         .name(platform.getName())
+                .build()
         );
     }
 
