@@ -28,6 +28,18 @@ public class PlatformController {
         return ResponseEntity.ok(platformService.findAllByPage(pageable));
     }
 
+    @GetMapping("/platform/search")
+    public ResponseEntity<?> getSearchList(@RequestParam String search, @PageableDefault(size = 20) Pageable pageable) {
+
+        List<PlatformDto> platforms = platformService.findAllBySearch(search, pageable);
+
+        if (platforms.size() > 0) {
+            return ResponseEntity.ok(platforms);
+        } else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 검색에 해당되는 것이 없습니다.");
+        }
+    }
+
     @PostMapping("/platform/new")
     public ResponseEntity<?> createPlatform(@RequestBody PlatformDto platformDto) {
 
@@ -39,6 +51,7 @@ public class PlatformController {
             return ResponseEntity.ok(save);
         }
     }
+
 
     @PutMapping("/platform")
     public ResponseEntity<?> updatePlatform(@RequestBody PlatformDto platformDto) {

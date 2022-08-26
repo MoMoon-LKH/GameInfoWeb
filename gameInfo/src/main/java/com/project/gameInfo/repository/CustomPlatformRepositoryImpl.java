@@ -30,4 +30,18 @@ public class CustomPlatformRepositoryImpl implements CustomPlatformRepository{
                 .offset(pageable.getOffset())
                 .fetch();
     }
+
+    @Override
+    public List<PlatformDto> findAllBySearch(String search, Pageable pageable) {
+        QPlatform platform = QPlatform.platform;
+
+        return jpaQueryFactory.select(Projections.bean(PlatformDto.class,
+                        platform.id.as("id"),
+                        platform.name.as("name")
+                )).from(platform)
+                .where(platform.name.startsWith(search))
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetch();
+    }
 }

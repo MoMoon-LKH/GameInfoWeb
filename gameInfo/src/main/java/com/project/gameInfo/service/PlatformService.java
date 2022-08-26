@@ -59,4 +59,8 @@ public class PlatformService {
     public List<PlatformDto> findAllByPage(Pageable pageable) {
         return platformRepository.findAllByPage(pageable);
     }
+
+    public List<PlatformDto> findAllBySearch(String search, Pageable pageable) {
+        return platformRepository.findAllBySearch(search, pageable);
+    }
 }
