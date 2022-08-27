@@ -26,7 +26,12 @@ public class GamesService {
 
 
     public List<GamesDto> findAllByPage(Pageable pageable) {
+
         return gamesRepository.findAllByPage(pageable);
+    }
+
+    public List<GamesDto> findAllBySearch(String search, Pageable pageable) {
+        return gamesRepository.findAllBySearch(search, pageable);
     }
 
     public Games findById(Long id) {

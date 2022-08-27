@@ -34,6 +34,8 @@ public class CustomGamesRepositoryImpl implements CustomGamesRepository {
                         games.releaseDate
                 ))
                 .from(games)
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
                 .fetch();
     }
 
@@ -55,5 +57,26 @@ public class CustomGamesRepositoryImpl implements CustomGamesRepository {
                 .where(games.id.eq(id))
                 .fetchFirst();
 
+    }
+
+    @Override
+    public List<GamesDto> findAllBySearch(String search, Pageable pageable) {
+        QGames games = QGames.games;
+        QReviewScore reviewScore = QReviewScore.reviewScore;
+
+
+        return queryFactory
+                .select(Projections.bean(GamesDto.class,
+                        games.id,
+                        games.name,
+                        games.introduction,
+                        games.company,
+                        games.releaseDate
+                ))
+                .from(games)
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .where(games.name.startsWith(search))
+                .fetch();
     }
 }

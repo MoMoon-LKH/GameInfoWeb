@@ -67,8 +67,26 @@ public class GamesController {
         return ResponseEntity.ok(gamesDtos);
     }
 
+    @GetMapping("/all/games/search")
+    public ResponseEntity<?> searchList(
+            @RequestParam String search,
+            @PageableDefault(sort = "release_date", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+
+        List<GamesDto> gamesDtos = gamesService.findAllBySearch(search, pageable);
+
+        for (GamesDto gamesDto : gamesDtos) {
+            gamesDto.setReviewScore(reviewScoreService.findScoreByGamesId(gamesDto.getId()));
+            gamesDto.setGenres(gamesGenreService.findGenresByGamesId(gamesDto.getId()));
+            gamesDto.setPlatform(gamesPlatformService.findPlatformsByGamesId(gamesDto.getId()));
+        }
+
+        return ResponseEntity.ok(gamesDtos);
+    }
+
+
     @GetMapping("/all/games/{id}")
-    public ResponseEntity<?> getGames(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getGame(@PathVariable("id") Long id) {
 
         GamesDto game = gamesService.findDtoById(id);
         game.setReviewScore(reviewScoreService.findScoreByGamesId(game.getId()));

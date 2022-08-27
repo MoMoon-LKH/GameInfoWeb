@@ -5,6 +5,7 @@ import com.project.gameInfo.domain.Image;
 import com.project.gameInfo.service.GamesService;
 import com.project.gameInfo.service.ImageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +24,12 @@ public class ImageController {
 
     private final ImageService imageService;
 
-    private final String IMAGE_PATH = "D:\\MyProject\\personal_project\\Images\\GameInfo";
+    @Value("${custom.resource-path}")
+    private String IMAGE_PATH;
 
 
     @PostMapping("/image")
-    public ResponseEntity<?> saveImages(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<?> saveImages(@RequestPart(value = "file") MultipartFile file) throws IOException {
 
         Image image = uploadImage(file);
 
@@ -59,7 +61,7 @@ public class ImageController {
                 e.printStackTrace();
             }
 
-            return new Image(file.getOriginalFilename(), url);
+            return new Image(file.getOriginalFilename(), uuid + file.getOriginalFilename());
 
         } else {
             return null;

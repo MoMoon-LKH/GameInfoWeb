@@ -9,4 +9,6 @@ public interface CustomGamesRepository {
 
     List<GamesDto> findAllByPage(Pageable pageable);
     GamesDto findDtoById(Long id);
+
+    List<GamesDto> findAllBySearch(String search, Pageable pageable);
 }

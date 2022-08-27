@@ -9,6 +9,9 @@ spring:
     show-sql: true
     database: mysql
     database-platform: com.project.gameInfo.config.MysqlCustomDialect
+  servlet:
+    multipart:
+      max-file-size: 50MB
 
 
 jwt:
@@ -22,3 +25,8 @@ server:
     key-store-password: gameinfo
     key-alias: gameinfo-keystore
   port: 443
+
+
+custom:
+  resource-path: D:\MyProject\personal_project\Images\GameInfo\
+  image-path: /img/**
