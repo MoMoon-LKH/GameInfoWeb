@@ -45,6 +45,10 @@ public class GenreService {
         return genreRepository.findById(id).orElseThrow(NoSuchFieldError::new);
     }
 
+    public List<GenreDto> findAll() {
+        return genreRepository.findAllDto();
+    }
+
     public List<GenreDto> getListByPage(Pageable pageable) {
         return genreRepository.findAllByPage(pageable);
     }

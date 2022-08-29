@@ -11,5 +11,7 @@ import java.util.List;
 public interface CustomGenreRepository {
     List<GenreDto> findAllByPage(Pageable pageable);
 
+    List<GenreDto> findAllDto();
+
     List<Genre> findAllByGamesId(Long id);
 }

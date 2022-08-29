@@ -35,6 +35,12 @@ public class GenreController {
         return ResponseEntity.ok(genreService.getListByPage(pageable));
     }
 
+    @GetMapping("/manage/genre/list/all")
+    public ResponseEntity<?> genreListAll() {
+
+        return ResponseEntity.ok(genreService.findAll());
+    }
+
     @PutMapping("/manage/genre")
     public ResponseEntity<?> updateGenre(@RequestBody GenreDto genreDto) {
         Genre genre = genreService.findById(genreDto.getId());

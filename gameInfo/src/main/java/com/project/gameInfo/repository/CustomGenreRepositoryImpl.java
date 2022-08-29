@@ -29,8 +29,20 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository{
                 .from(genre)
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
+                .orderBy(genre.name.asc())
                 .fetch();
 
+    }
+
+    @Override
+    public List<GenreDto> findAllDto() {
+        QGenre genre = QGenre.genre;
+        return jpaQueryFactory.select(Projections.bean(GenreDto.class,
+                genre.id.as("id"),
+                genre.name.as("name")))
+                .from(genre)
+                .orderBy(genre.name.asc())
+                .fetch();
     }
 
     @Override
