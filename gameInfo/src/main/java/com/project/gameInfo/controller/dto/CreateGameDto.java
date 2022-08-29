@@ -1,5 +1,6 @@
 package com.project.gameInfo.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,10 @@ public class CreateGameDto {
 
     private String company;
 
+    @JsonProperty(namespace = "release_data")
     private Date releaseDate;
+
+    private Long imgId;
 
     private List<Long> genres;
 
