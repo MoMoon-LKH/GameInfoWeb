@@ -10,4 +10,8 @@ public interface CustomPlatformRepository {
     List<PlatformDto> findAllByPage(Pageable pageable);
 
     List<PlatformDto> findAllBySearch(String search, Pageable pageable);
+
+    List<PlatformDto> findAllDto();
+
+    List<PlatformDto> findAllDtoBySearch(String search);
 }

@@ -44,4 +44,29 @@ public class CustomPlatformRepositoryImpl implements CustomPlatformRepository{
                 .offset(pageable.getOffset())
                 .fetch();
     }
+
+    @Override
+    public List<PlatformDto> findAllDto() {
+        QPlatform platform = QPlatform.platform;
+
+        return jpaQueryFactory.select(Projections.bean(PlatformDto.class,
+                        platform.id.as("id"),
+                        platform.name.as("name")))
+                .from(platform)
+                .orderBy(platform.name.asc())
+                .fetch();
+    }
+
+    @Override
+    public List<PlatformDto> findAllDtoBySearch(String search) {
+        QPlatform platform = QPlatform.platform;
+
+        return jpaQueryFactory.select(Projections.bean(PlatformDto.class,
+                        platform.id.as("id"),
+                        platform.name.as("name")))
+                .from(platform)
+                .where(platform.name.startsWith(search))
+                .orderBy(platform.name.asc())
+                .fetch();
+    }
 }

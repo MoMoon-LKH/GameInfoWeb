@@ -68,4 +68,10 @@ public class GenreController {
         return ResponseEntity.ok(genreService.findAllByName(search, pageable));
     }
 
+    @GetMapping("/manage/genre/search/all")
+    public ResponseEntity<?> searchGenresAll(@RequestParam("search") String search) {
+
+        return ResponseEntity.ok(genreService.findAllDtoByName(search));
+    }
+
 }

@@ -40,6 +40,16 @@ public class PlatformController {
         }
     }
 
+    @GetMapping("/platform/list/all")
+    public ResponseEntity<?> getListAll() {
+        return ResponseEntity.ok(platformService.findAllDto());
+    }
+
+    @GetMapping("/platform/search/all")
+    public ResponseEntity<?> getListAllSearch(@RequestParam String search) {
+        return ResponseEntity.ok(platformService.findAllDtoByName(search));
+    }
+
     @PostMapping("/platform/new")
     public ResponseEntity<?> createPlatform(@RequestBody PlatformDto platformDto) {
 

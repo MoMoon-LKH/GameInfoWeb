@@ -13,5 +13,7 @@ public interface CustomGenreRepository {
 
     List<GenreDto> findAllDto();
 
+    List<GenreDto> findAllDtoBySearch(String search);
+
     List<Genre> findAllByGamesId(Long id);
 }

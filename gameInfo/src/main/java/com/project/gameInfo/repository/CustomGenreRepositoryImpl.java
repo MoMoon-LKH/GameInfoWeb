@@ -46,6 +46,18 @@ public class CustomGenreRepositoryImpl implements CustomGenreRepository{
     }
 
     @Override
+    public List<GenreDto> findAllDtoBySearch(String search) {
+        QGenre genre = QGenre.genre;
+        return jpaQueryFactory.select(Projections.bean(GenreDto.class,
+                genre.id.as("id"),
+                genre.name.as("name")))
+                .from(genre)
+                .orderBy(genre.name.asc())
+                .where(genre.name.startsWith(search))
+                .fetch();
+    }
+
+    @Override
     public List<Genre> findAllByGamesId(Long id) {
         QGenre genre = QGenre.genre;
         QGamesGenre gamesGenre = QGamesGenre.gamesGenre;

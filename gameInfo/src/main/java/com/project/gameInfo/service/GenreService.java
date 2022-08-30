@@ -57,6 +57,11 @@ public class GenreService {
         return genreRepository.findAllByNameStartingWithOrderByNameAsc(search, pageable);
     }
 
+    public List<GenreDto> findAllDtoByName(String search) {
+        return genreRepository.findAllDtoBySearch(search);
+    }
+
+
     public List<Genre> findAllByIds(List<Long> ids) {
         return genreRepository.findByIds(ids);
     }
