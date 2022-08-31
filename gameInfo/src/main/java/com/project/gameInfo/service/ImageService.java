@@ -1,6 +1,7 @@
 package com.project.gameInfo.service;
 
 import com.project.gameInfo.domain.Image;
+import com.project.gameInfo.exception.NotFoundCommentException;
 import com.project.gameInfo.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,9 @@ public class ImageService {
     @Transactional
     public Long save(Image image) {
         return imageRepository.save(image).getId();
+    }
+
+    public String findUrl(Long id) {
+        return imageRepository.findById(id).orElseThrow(NoSuchFieldError::new).getUrl();
     }
 }

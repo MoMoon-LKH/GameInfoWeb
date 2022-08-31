@@ -53,7 +53,7 @@ class GamesRepositoryTest {
     public void createGames() {
 
         //given
-        Games games = Games.createGames(getDto("테스트"));
+        Games games = Games.createGames(getDto("테스트"), "imageUrl");
 
 
         //when
@@ -71,8 +71,8 @@ class GamesRepositoryTest {
 
         //given
         Pageable pageable = PageRequest.of(0, 10);
-        Games games1 = Games.createGames(getDto("테스트1"));
-        Games games2 = Games.createGames(getDto("테스트2"));
+        Games games1 = Games.createGames(getDto("테스트1"), "imageUrl");
+        Games games2 = Games.createGames(getDto("테스트2"), "imageUrl");
         gamesRepository.save(games1);
         gamesRepository.save(games2);
 

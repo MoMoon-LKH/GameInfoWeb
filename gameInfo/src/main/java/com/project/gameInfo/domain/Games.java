@@ -30,6 +30,9 @@ public class Games {
     @Column(name = "create_date")
     private Date createDate;
 
+    @Column(name = "imageUrl")
+    private String imageUrl;
+
     @OneToMany(mappedBy = "games")
     private List<ReviewScore> reviewScores = new ArrayList<>();
 
@@ -43,16 +46,17 @@ public class Games {
     private List<GamesCategory> gamesCategories = new ArrayList<>();
 
 
-    private Games(CreateGameDto gamesDto){
+    private Games(CreateGameDto gamesDto , String imageUrl){
         this.name = gamesDto.getName();
         this.introduction = gamesDto.getIntroduction();
         this.company = gamesDto.getCompany();
         this.releaseDate = gamesDto.getReleaseDate();
         this.createDate = new Date();
+        this.imageUrl = imageUrl;
     }
 
-    public static Games createGames(CreateGameDto gamesDto) {
-        return new Games(gamesDto);
+    public static Games createGames(CreateGameDto gamesDto, String imageUrl) {
+        return new Games(gamesDto, imageUrl);
     }
 
 

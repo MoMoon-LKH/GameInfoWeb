@@ -47,7 +47,7 @@ class GamesGenreRepositoryTest {
             if (games.size() > 0) {
                 genres.add(genreRepository.save(new Genre("테스트")));
             } else{
-                games.add(gamesRepository.save(Games.createGames(CreateGameDto.builder().name("테스트").build())));
+                games.add(gamesRepository.save(Games.createGames(CreateGameDto.builder().name("테스트").build(), "imageUrl")));
 
             }
         }
@@ -68,7 +68,7 @@ class GamesGenreRepositoryTest {
     public void genreString() {
 
         //given
-        Games game = Games.createGames(createGameDto("테스트"));
+        Games game = Games.createGames(createGameDto("테스트"), "imageUrl");
         gamesRepository.save(game);
         Genre genre1 = genreRepository.save(new Genre("TEST1"));
         Genre genre2 = genreRepository.save(new Genre("TEST2"));

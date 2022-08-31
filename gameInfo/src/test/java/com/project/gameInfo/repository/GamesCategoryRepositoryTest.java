@@ -40,7 +40,7 @@ class GamesCategoryRepositoryTest {
     public void saveGamesCategory() {
 
         //given
-        Games games = gamesRepository.save(Games.createGames(createGameDto("TEST")));
+        Games games = gamesRepository.save(Games.createGames(createGameDto("TEST"), "imageUrl"));
         Category category = categoryRepository.save(Category.createCategory(createCategoryDto("test")));
 
         //when
@@ -58,7 +58,7 @@ class GamesCategoryRepositoryTest {
     public void gamesCategoryList() {
 
         //given
-        Games games = gamesRepository.save(Games.createGames(createGameDto("TEST")));
+        Games games = gamesRepository.save(Games.createGames(createGameDto("TEST"), "imageUrl"));
         Category category = categoryRepository.save(Category.createCategory(createCategoryDto("test1")));
         Category category2 = categoryRepository.save(Category.createCategory(createCategoryDto("test2")));
 

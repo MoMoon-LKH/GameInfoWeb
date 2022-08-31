@@ -2,6 +2,7 @@ package com.project.gameInfo.controller;
 
 import com.project.gameInfo.controller.dto.CreateGameDto;
 import com.project.gameInfo.controller.dto.GamesDto;
+import com.project.gameInfo.controller.dto.GenreDto;
 import com.project.gameInfo.domain.Games;
 import com.project.gameInfo.domain.Genre;
 import com.project.gameInfo.domain.Platform;
@@ -15,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,11 +32,15 @@ public class GamesController {
     private final GenreService genreService;
     private final ReviewScoreService reviewScoreService;
 
+    private final ImageService imageService;
+
 
     @PostMapping("/manage/games/new")
     public ResponseEntity<?> createGames(@RequestBody CreateGameDto gameDto) {
 
-        Games games = Games.createGames(gameDto);
+        System.out.println("gameDto.toString() = " + gameDto.toString());
+
+        Games games = Games.createGames(gameDto, imageService.findUrl(gameDto.getImgId()));
         gamesService.save(games);
 
         for (Long id : gameDto.getGenres()) {
@@ -46,8 +53,11 @@ public class GamesController {
             gamesPlatformService.save(games, platform);
         }
 
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", games.getId());
+        map.put("name", games.getName());
 
-        return ResponseEntity.ok(games.getId());
+        return ResponseEntity.ok(map);
     }
 
 

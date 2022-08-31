@@ -4,6 +4,7 @@ import com.project.gameInfo.config.TestConfig;
 import com.project.gameInfo.controller.dto.CreateGameDto;
 import com.project.gameInfo.domain.Games;
 import com.project.gameInfo.domain.GamesPlatform;
+import com.project.gameInfo.domain.Image;
 import com.project.gameInfo.domain.Platform;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -41,6 +42,7 @@ class GamesPlatformRepositoryTest {
     public void saveGamesPlatform() {
 
         // given
+
         List<Games> games = gamesRepository.findAll();
         List<Platform> platforms = platformRepository.findAll();
 
@@ -48,7 +50,7 @@ class GamesPlatformRepositoryTest {
             if (games.size() > 0) {
                 platforms.add(platformRepository.save(new Platform("테스트")));
             } else{
-                games.add(gamesRepository.save(Games.createGames(CreateGameDto.builder().name("테스트").build())));
+                games.add(gamesRepository.save(Games.createGames(CreateGameDto.builder().name("테스트").build(), "image")));
 
             }
         }
@@ -69,7 +71,7 @@ class GamesPlatformRepositoryTest {
     public void platformString() {
 
         //given
-        Games game = gamesRepository.save(Games.createGames(createGameDto("테스트")));
+        Games game = gamesRepository.save(Games.createGames(createGameDto("테스트"), "url"));
         gamesRepository.save(game);
         Platform platform1 = new Platform("테스트1");
         Platform platform2 = new Platform("테스트2");
