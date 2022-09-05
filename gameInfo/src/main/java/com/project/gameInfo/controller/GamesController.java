@@ -1,6 +1,7 @@
 package com.project.gameInfo.controller;
 
 import com.project.gameInfo.controller.dto.CreateGameDto;
+import com.project.gameInfo.controller.dto.GameSearchDto;
 import com.project.gameInfo.controller.dto.GamesDto;
 import com.project.gameInfo.controller.dto.GenreDto;
 import com.project.gameInfo.domain.Games;
@@ -84,6 +85,24 @@ public class GamesController {
     ) {
 
         List<GamesDto> gamesDtos = gamesService.findAllBySearch(search, pageable);
+
+        for (GamesDto gamesDto : gamesDtos) {
+            gamesDto.setReviewScore(reviewScoreService.findScoreByGamesId(gamesDto.getId()));
+            gamesDto.setGenres(gamesGenreService.findGenresByGamesId(gamesDto.getId()));
+            gamesDto.setPlatform(gamesPlatformService.findPlatformsByGamesId(gamesDto.getId()));
+        }
+
+        return ResponseEntity.ok(gamesDtos);
+    }
+
+    @GetMapping("/all/games/search/column")
+    public ResponseEntity<?> searchColumn(
+            @RequestParam String search,
+            @RequestParam String column,
+            @PageableDefault(sort = "release_date", direction = Sort.Direction.DESC) Pageable pageable
+            ) {
+
+        List<GamesDto> gamesDtos = gamesService.findAllBySearchColumn(search, column, pageable);
 
         for (GamesDto gamesDto : gamesDtos) {
             gamesDto.setReviewScore(reviewScoreService.findScoreByGamesId(gamesDto.getId()));

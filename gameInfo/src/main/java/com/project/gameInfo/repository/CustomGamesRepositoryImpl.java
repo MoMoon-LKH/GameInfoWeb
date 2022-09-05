@@ -1,7 +1,9 @@
 package com.project.gameInfo.repository;
 
+import com.project.gameInfo.controller.dto.GameSearchDto;
 import com.project.gameInfo.controller.dto.GamesDto;
 import com.project.gameInfo.domain.*;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -31,8 +33,9 @@ public class CustomGamesRepositoryImpl implements CustomGamesRepository {
                         games.name,
                         games.introduction,
                         games.company,
-                        games.releaseDate
-                ))
+                        games.releaseDate,
+                        games.imageUrl.as("imgUrl"
+                )))
                 .from(games)
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
@@ -51,7 +54,8 @@ public class CustomGamesRepositoryImpl implements CustomGamesRepository {
                         games.name,
                         games.introduction,
                         games.company,
-                        games.releaseDate
+                        games.releaseDate,
+                        games.imageUrl.as("imgUrl")
                 ))
                 .from(games)
                 .where(games.id.eq(id))
@@ -71,12 +75,44 @@ public class CustomGamesRepositoryImpl implements CustomGamesRepository {
                         games.name,
                         games.introduction,
                         games.company,
-                        games.releaseDate
+                        games.releaseDate,
+                        games.imageUrl.as("imgUrl")
+
                 ))
                 .from(games)
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
                 .where(games.name.startsWith(search))
+                .fetch();
+    }
+
+
+    @Override
+    public List<GamesDto> findAllBySearchColumn(String search, String column, Pageable pageable) {
+
+        QGames games = QGames.games;
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (column.equals("name")) {
+            builder.and(games.name.startsWith(search));
+        }
+
+        if (column.equals("company")) {
+            builder.and(games.company.startsWith(search));
+        }
+
+        return queryFactory.select(Projections.bean(GamesDto.class,
+                        games.id,
+                        games.name,
+                        games.introduction,
+                        games.company,
+                        games.releaseDate,
+                        games.imageUrl.as("imgUrl")))
+                .from(games)
+                .where(builder)
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
                 .fetch();
     }
 }

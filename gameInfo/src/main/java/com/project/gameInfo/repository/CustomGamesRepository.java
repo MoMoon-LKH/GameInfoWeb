@@ -1,5 +1,6 @@
 package com.project.gameInfo.repository;
 
+import com.project.gameInfo.controller.dto.GameSearchDto;
 import com.project.gameInfo.controller.dto.GamesDto;
 import org.springframework.data.domain.Pageable;
 
@@ -11,4 +12,6 @@ public interface CustomGamesRepository {
     GamesDto findDtoById(Long id);
 
     List<GamesDto> findAllBySearch(String search, Pageable pageable);
+
+    List<GamesDto> findAllBySearchColumn(String search, String column, Pageable pageable);
 }

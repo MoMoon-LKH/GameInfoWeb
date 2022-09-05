@@ -26,13 +26,14 @@ public class GamesDto {
     private String imgUrl;
 
 
-    public GamesDto(Long id, String name, String introduction, String company, Date releaseDate, double reviewScore) {
+    public GamesDto(Long id, String name, String introduction, String company, Date releaseDate, double reviewScore, String imageUrl) {
         this.id = id;
         this.name = name;
         this.introduction = introduction;
         this.company = company;
         this.releaseDate = releaseDate;
         this.reviewScore = reviewScore;
+        this.imgUrl = imageUrl;
     }
 
 }

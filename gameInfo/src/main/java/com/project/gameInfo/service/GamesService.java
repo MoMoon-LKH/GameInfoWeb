@@ -1,5 +1,6 @@
 package com.project.gameInfo.service;
 
+import com.project.gameInfo.controller.dto.GameSearchDto;
 import com.project.gameInfo.controller.dto.GamesDto;
 import com.project.gameInfo.domain.Games;
 import com.project.gameInfo.exception.NotFoundGameException;
@@ -34,6 +35,10 @@ public class GamesService {
         return gamesRepository.findAllBySearch(search, pageable);
     }
 
+    public List<GamesDto> findAllBySearchColumn(String search, String column, Pageable pageable) {
+        return gamesRepository.findAllBySearchColumn(search, column, pageable);
+    }
+
     public Games findById(Long id) {
         return gamesRepository.findById(id).orElseThrow(NotFoundGameException::new);
     }
@@ -41,4 +46,5 @@ public class GamesService {
     public GamesDto findDtoById(Long id) {
         return gamesRepository.findDtoById(id);
     }
+
 }
