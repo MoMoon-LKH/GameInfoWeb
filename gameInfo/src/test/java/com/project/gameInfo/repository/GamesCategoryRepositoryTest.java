@@ -5,7 +5,6 @@ import com.project.gameInfo.controller.dto.CategoryDto;
 import com.project.gameInfo.controller.dto.CreateGameDto;
 import com.project.gameInfo.domain.Category;
 import com.project.gameInfo.domain.Games;
-import com.project.gameInfo.domain.GamesCategory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -28,6 +28,7 @@ public class CustomPlatformRepositoryImpl implements CustomPlatformRepository{
                 .from(platform)
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
+                .orderBy(platform.name.asc())
                 .fetch();
     }
 

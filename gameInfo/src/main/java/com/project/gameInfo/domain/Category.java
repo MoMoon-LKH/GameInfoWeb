@@ -18,14 +18,6 @@ public class Category {
 
     private String name;
 
-    @Column(name = "parent_id")
-    private Long parentId;
-
-    @Enumerated(EnumType.STRING)
-    private CategoryState state;
-
-    @OneToMany(mappedBy = "category")
-    private List<GamesCategory> gamesCategories = new ArrayList<>();
 
 
     public Category() {
@@ -33,15 +25,11 @@ public class Category {
 
     private Category(CategoryDto categoryDto) {
         this.name = categoryDto.getName();
-        this.parentId = categoryDto.getParentId();
-        this.state = CategoryState.ALIVE;
     }
 
-    public Category(Long id, String name, Long parentId, CategoryState state) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.parentId = parentId;
-        this.state = state;
     }
 
 
@@ -55,7 +43,4 @@ public class Category {
         this.name = name;
     }
 
-    public void updateDeleteState() {
-        this.state = CategoryState.DELETE;
-    }
 }
