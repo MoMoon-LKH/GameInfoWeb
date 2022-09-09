@@ -22,7 +22,11 @@ public class GamesGenreService {
     }
 
     public String findGenresByGamesId(Long id) {
-        return gamesGenreRepository.findGenresByGamesId(id).replace(",", " ");
+        try {
+            return gamesGenreRepository.findGenresByGamesId(id).replace(",", " ");
+        } catch (Exception e) {
+            return " ";
+        }
     }
 
 }

@@ -42,6 +42,9 @@ public class Games {
     @OneToMany(mappedBy = "games")
     private List<GamesPlatform> gamesPlatforms = new ArrayList<>();
 
+    @OneToMany(mappedBy = "games")
+    private List<Post> posts = new ArrayList<>();
+
 
 
     private Games(CreateGameDto gamesDto , String imageUrl){

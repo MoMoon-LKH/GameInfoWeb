@@ -1,9 +1,13 @@
 package com.project.gameInfo.controller.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
+@Builder
 @AllArgsConstructor
 public class PostListDto {
 
@@ -11,9 +15,14 @@ public class PostListDto {
 
     private String title;
 
-    private Long categoryId;
+    private int view;
 
-    private String categoryName;
+    private Long memberId;
 
-    private Long commentCount;
+    private String nickname;
+
+    private int commentCount;
+
+    private Date createDate;
+
 }

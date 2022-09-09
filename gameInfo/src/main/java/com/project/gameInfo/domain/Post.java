@@ -42,6 +42,10 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<ReviewScore> reviewScores = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "games_id")
+    private Games games;
+
     public Post() {
     }
 

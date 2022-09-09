@@ -2,10 +2,12 @@ package com.project.gameInfo.service;
 
 import com.project.gameInfo.controller.dto.CreatePostDto;
 import com.project.gameInfo.controller.dto.PostDto;
+import com.project.gameInfo.controller.dto.PostListDto;
 import com.project.gameInfo.domain.Post;
 import com.project.gameInfo.exception.NotFoundPostException;
 import com.project.gameInfo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +42,7 @@ public class PostService {
         return postRepository.findById(id).orElseThrow(NotFoundPostException::new);
     }
 
-    public List<Post> findAllByCategoryId(Long id) {
-        return postRepository.findAllByCategoryIdOrderByCreateDateDesc(id);
+    public List<PostListDto> findAllByCategoryAndGamePage(Long categoryId, Long gameId, Pageable pageable) {
+        return postRepository.findAllByCategoryIdAndGamePage(categoryId, gameId, pageable);
     }
 }

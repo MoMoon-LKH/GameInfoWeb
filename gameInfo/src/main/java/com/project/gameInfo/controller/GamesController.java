@@ -69,10 +69,13 @@ public class GamesController {
 
         List<GamesDto> gamesDtos = gamesService.findAllByPage(pageable);
 
-        for (GamesDto gamesDto : gamesDtos) {
-            gamesDto.setReviewScore(reviewScoreService.findScoreByGamesId(gamesDto.getId()));
-            gamesDto.setGenres(gamesGenreService.findGenresByGamesId(gamesDto.getId()));
-            gamesDto.setPlatform(gamesPlatformService.findPlatformsByGamesId(gamesDto.getId()));
+        System.out.println(gamesDtos.size());
+        if(gamesDtos.size() > 0) {
+            for (GamesDto gamesDto : gamesDtos) {
+                gamesDto.setReviewScore(reviewScoreService.findScoreByGamesId(gamesDto.getId()));
+                gamesDto.setGenres(gamesGenreService.findGenresByGamesId(gamesDto.getId()));
+                gamesDto.setPlatform(gamesPlatformService.findPlatformsByGamesId(gamesDto.getId()));
+            }
         }
 
         return ResponseEntity.ok(gamesDtos);

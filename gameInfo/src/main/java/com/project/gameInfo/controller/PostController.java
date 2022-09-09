@@ -2,6 +2,7 @@ package com.project.gameInfo.controller;
 
 import com.project.gameInfo.controller.dto.CreatePostDto;
 import com.project.gameInfo.controller.dto.PostDto;
+import com.project.gameInfo.controller.dto.PostListDto;
 import com.project.gameInfo.domain.Category;
 import com.project.gameInfo.domain.Comment;
 import com.project.gameInfo.domain.Member;
@@ -11,6 +12,8 @@ import com.project.gameInfo.service.CommentService;
 import com.project.gameInfo.service.MemberService;
 import com.project.gameInfo.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -61,17 +64,14 @@ public class PostController {
     }
 
 
-    @GetMapping("/all/post/list/{categoryId}")
-    public ResponseEntity<?> getPostList(@PathVariable("categoryId") Long categoryId) {
+    @GetMapping("/all/post/list")
+    public ResponseEntity<?> getPostList(
+            @RequestParam Long categoryId,
+            @RequestParam Long gameId, @PageableDefault Pageable pageable){
 
-        List<Post> posts = postService.findAllByCategoryId(categoryId);
-        List<PostDto> postDtos = new ArrayList<>();
+        List<PostListDto> postList = postService.findAllByCategoryAndGamePage(categoryId, gameId, pageable);
 
-        for (Post post : posts) {
-            postDtos.add(new PostDto(post));
-        }
-
-        return ResponseEntity.ok(postDtos);
+        return ResponseEntity.ok(postList);
     }
 
 

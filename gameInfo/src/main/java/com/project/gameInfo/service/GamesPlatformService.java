@@ -23,7 +23,11 @@ public class GamesPlatformService {
     }
 
     public String findPlatformsByGamesId(Long id) {
-        return gamesPlatformRepository.findPlatformsByGamesId(id).replace(",", " ");
+        try {
+            return gamesPlatformRepository.findPlatformsByGamesId(id).replace(",", " ");
+        } catch (Exception e) {
+            return " ";
+        }
     }
 
 }
