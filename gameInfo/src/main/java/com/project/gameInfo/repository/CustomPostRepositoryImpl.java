@@ -27,7 +27,7 @@ public class CustomPostRepositoryImpl implements CustomPostRepository{
                         post.title,
                         post.view,
                         post.member.id.as("memberId"),
-                        post.member.nickname,
+                        post.member.nickname.as("nickname"),
                         post.comments.size().as("commentCount"),
                         post.createDate
                 ))

@@ -47,4 +47,11 @@ public class GamesService {
         return gamesRepository.findDtoById(id);
     }
 
+    public Long countAll() {
+        return gamesRepository.countAllBy();
+    }
+
+    public Long countAllByName(String name) {
+        return gamesRepository.countAllByNameStartsWith(name);
+    }
 }

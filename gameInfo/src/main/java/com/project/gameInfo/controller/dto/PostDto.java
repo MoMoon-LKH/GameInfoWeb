@@ -34,6 +34,8 @@ public class PostDto {
 
     private String nickname;
 
+    private Long gameId;
+
     public PostDto(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();

@@ -3,14 +3,8 @@ package com.project.gameInfo.controller;
 import com.project.gameInfo.controller.dto.CreatePostDto;
 import com.project.gameInfo.controller.dto.PostDto;
 import com.project.gameInfo.controller.dto.PostListDto;
-import com.project.gameInfo.domain.Category;
-import com.project.gameInfo.domain.Comment;
-import com.project.gameInfo.domain.Member;
-import com.project.gameInfo.domain.Post;
-import com.project.gameInfo.service.CategoryService;
-import com.project.gameInfo.service.CommentService;
-import com.project.gameInfo.service.MemberService;
-import com.project.gameInfo.service.PostService;
+import com.project.gameInfo.domain.*;
+import com.project.gameInfo.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -22,7 +16,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,7 +30,7 @@ public class PostController {
     private final MemberService memberService;
 
     private final CategoryService categoryService;
-
+    private final GamesService gamesService;
     private final CommentService commentService;
 
 
@@ -44,16 +40,23 @@ public class PostController {
         Member member = memberService.findMemberByMemberId(user.getUsername());
         Category category = categoryService.findByCategoryId(postDto.getCategoryId());
 
-        if (user.getUsername().equals(member.getMemberId())) {
+        if (postDto.getMemberId().equals(member.getId())) {
 
-            Post post = Post.createPost(postDto, category, member);
+            Post post;
+
+            if(postDto.getGameId() != null){
+                Games games = gamesService.findById(postDto.getGameId());
+                post = Post.createPost(postDto, category, member, games);
+            } else {
+                post = Post.createPostNotGames(postDto, category, member);
+            }
 
             postService.save(post);
 
             return ResponseEntity.ok(new PostDto(post));
         }
 
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("해당 유저와 작성자가 다르므로 권한이 없습니다.");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한이 없습니다.");
     }
 
 
@@ -73,6 +76,7 @@ public class PostController {
 
         return ResponseEntity.ok(postList);
     }
+
 
 
     @PutMapping("/user/post")
