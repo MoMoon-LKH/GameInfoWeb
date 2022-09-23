@@ -9,4 +9,8 @@ import java.util.List;
 public interface CustomPostRepository {
 
     List<PostListDto> findAllByCategoryIdAndGamePage(Long categoryId, Long gameId, Pageable pageable);
+
+    List<PostListDto> findAllByCategoryId(Long categoryId, Pageable pageable);
+
+    Long countByCategoryAndGamePage(Long categoryId, Long gamesId);
 }

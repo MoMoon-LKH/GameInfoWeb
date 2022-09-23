@@ -45,4 +45,12 @@ public class PostService {
     public List<PostListDto> findAllByCategoryAndGamePage(Long categoryId, Long gameId, Pageable pageable) {
         return postRepository.findAllByCategoryIdAndGamePage(categoryId, gameId, pageable);
     }
+
+    public List<PostListDto> findAllByCategory(Long categoryId, Pageable pageable) {
+        return postRepository.findAllByCategoryId(categoryId, pageable);
+    }
+
+    public Long countByCategoryIdAndGamesId(Long categoryId, Long gameId) {
+        return postRepository.countByCategoryAndGamePage(categoryId, gameId);
+    }
 }

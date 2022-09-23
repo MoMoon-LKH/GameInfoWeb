@@ -80,12 +80,13 @@ public class Post {
     }
 
 
-
-
-
     public void updatePost(PostDto postDto) {
         this.title = title;
         this.content = content;
         this.updateDate = new Date();
+    }
+
+    public void addView(){
+        view++;
     }
 }

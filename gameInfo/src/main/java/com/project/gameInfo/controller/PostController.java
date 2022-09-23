@@ -70,11 +70,27 @@ public class PostController {
     @GetMapping("/all/post/list")
     public ResponseEntity<?> getPostList(
             @RequestParam Long categoryId,
-            @RequestParam Long gameId, @PageableDefault Pageable pageable){
+            @RequestParam(required = false) Long gameId, @PageableDefault Pageable pageable){
 
         List<PostListDto> postList = postService.findAllByCategoryAndGamePage(categoryId, gameId, pageable);
+        Long total = postService.countByCategoryIdAndGamesId(categoryId, gameId);
 
-        return ResponseEntity.ok(postList);
+        Map<String, Object> map = new HashMap<>();
+        map.put("posts", postList);
+        map.put("total", total);
+
+        return ResponseEntity.ok(map);
+    }
+
+
+    @GetMapping("/all/post/main")
+    public ResponseEntity<?> getNewsList(
+            @RequestParam Long categoryId,
+            @PageableDefault(size = 5) Pageable pageable) {
+
+        List<PostListDto> list = postService.findAllByCategory(categoryId, pageable);
+
+        return ResponseEntity.ok(list);
     }
 
 
