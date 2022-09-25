@@ -1,10 +1,7 @@
 package com.project.gameInfo.controller.dto;
 
 import com.project.gameInfo.domain.Post;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -27,7 +24,6 @@ public class PostDto {
 
     @NotNull
     private Long categoryId;
-
 
     @NotNull
     private Long memberId;

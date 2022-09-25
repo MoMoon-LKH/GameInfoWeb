@@ -33,6 +33,11 @@ public class PostService {
     }
 
     @Transactional
+    public void addView(Post post) {
+        post.addView();
+    }
+
+    @Transactional
     public void delete(Post post) {
         postRepository.delete(post);
     }
