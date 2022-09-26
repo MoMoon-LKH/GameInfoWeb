@@ -36,4 +36,8 @@ public class GamesDto {
         this.imgUrl = imageUrl;
     }
 
+    public GamesDto(Games games) {
+        this.id = games.getId();
+        this.name = games.getName();
+    }
 }

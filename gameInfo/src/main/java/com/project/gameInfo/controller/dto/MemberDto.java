@@ -2,6 +2,7 @@ package com.project.gameInfo.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.gameInfo.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDto {
+
+    private Long id;
 
     @NotNull
     private String memberId;
@@ -39,4 +42,10 @@ public class MemberDto {
     private String status;
 
     private String roles;
+
+    public MemberDto(Member member) {
+        this.id = member.getId();
+        this.nickname = member.getNickname();
+
+    }
 }

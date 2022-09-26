@@ -35,7 +35,7 @@ class CategoryServiceTest {
 
         //given
         CategoryDto categoryDto = CategoryDto.builder()
-                .name("category").parentId(0L).build();
+                .name("category").build();
         Category category = Category.createCategory(categoryDto);
         when(categoryRepository.save(any())).thenReturn(category);
 
@@ -81,17 +81,17 @@ class CategoryServiceTest {
         when(categoryRepository.save(any())).thenReturn(category);
         categoryService.save(category);
 
-        //when
+       /* //when
         categoryService.deleteState(category);
 
         //then
-        assertThat(category.getState()).isEqualTo(CategoryState.DELETE);
+        assertThat(category.getState()).isEqualTo(CategoryState.DELETE);*/
     }
 
 
     Category generateCategory(){
         CategoryDto categoryDto = CategoryDto.builder()
-                .name("category").parentId(0L).build();
+                .name("category").build();
 
         return Category.createCategory(categoryDto);
     }

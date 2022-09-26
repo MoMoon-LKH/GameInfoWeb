@@ -1,8 +1,6 @@
 package com.project.gameInfo.controller;
 
-import com.project.gameInfo.controller.dto.CreatePostDto;
-import com.project.gameInfo.controller.dto.PostDto;
-import com.project.gameInfo.controller.dto.PostListDto;
+import com.project.gameInfo.controller.dto.*;
 import com.project.gameInfo.domain.*;
 import com.project.gameInfo.service.*;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +62,13 @@ public class PostController {
     public ResponseEntity<?> getPost(@PathVariable("postId") Long id) {
         Post post = postService.findById(id);
         postService.addView(post);
-        return ResponseEntity.ok(new PostDto(post));
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("post", new PostDto(post));
+        map.put("category", new CategoryDto(post.getCategory()));
+        map.put("member", new MemberDto(post.getMember()));
+        map.put("game", new GamesDto(post.getGames()));
+        return ResponseEntity.ok(map);
     }
 
 
@@ -79,6 +83,7 @@ public class PostController {
         Map<String, Object> map = new HashMap<>();
         map.put("posts", postList);
         map.put("total", total);
+
 
         return ResponseEntity.ok(map);
     }

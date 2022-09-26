@@ -1,5 +1,6 @@
 package com.project.gameInfo.controller.dto;
 
+import com.project.gameInfo.domain.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +16,8 @@ public class CategoryDto {
 
     private String name;
 
-    private Long parentId;
+    public CategoryDto(Category category) {
+        this.id = category.getId();
+        this.name = category.getName();
+    }
 }

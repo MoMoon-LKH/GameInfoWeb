@@ -42,7 +42,6 @@ class CategoryRepositoryTest {
     Category generateCategory() {
         CategoryDto categoryDto = CategoryDto.builder()
                 .name("category")
-                .parentId(0L)
                 .build();
 
         return Category.createCategory(categoryDto);

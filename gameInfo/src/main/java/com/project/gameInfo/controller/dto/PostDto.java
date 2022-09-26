@@ -32,14 +32,11 @@ public class PostDto {
 
     private Long gameId;
 
+
     public PostDto(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
         this.createDate = post.getCreateDate();
-        this.categoryId = post.getCategory().getId();
-        this.memberId = post.getMember().getId();
-        this.nickname = post.getMember().getNickname();
-
     }
 }
