@@ -2,6 +2,7 @@ package com.project.gameInfo.controller;
 
 import com.project.gameInfo.controller.dto.*;
 import com.project.gameInfo.domain.*;
+import com.project.gameInfo.repository.GamesGenreRepository;
 import com.project.gameInfo.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,8 @@ public class PostController {
     private final CategoryService categoryService;
     private final GamesService gamesService;
     private final CommentService commentService;
+    private final GamesPlatformService gamesPlatformService;
+    private final GamesGenreService gamesGenreService;
 
 
     @PostMapping("/user/post")
@@ -67,7 +70,13 @@ public class PostController {
         map.put("post", new PostDto(post));
         map.put("category", new CategoryDto(post.getCategory()));
         map.put("member", new MemberDto(post.getMember()));
-        map.put("game", new GamesDto(post.getGames()));
+
+        if(post.getGames() != null) {
+            GamesDto gamesDto = new GamesDto(post.getGames());
+            gamesDto.setGenres(gamesGenreService.findGenresByGamesId(gamesDto.getId()));
+            gamesDto.setPlatform(gamesPlatformService.findPlatformsByGamesId(gamesDto.getId()));
+            map.put("game", gamesDto);
+        }
         return ResponseEntity.ok(map);
     }
 

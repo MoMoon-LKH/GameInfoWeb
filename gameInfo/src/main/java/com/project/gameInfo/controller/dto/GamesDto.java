@@ -39,5 +39,7 @@ public class GamesDto {
     public GamesDto(Games games) {
         this.id = games.getId();
         this.name = games.getName();
+        this.releaseDate = games.getReleaseDate();
+        this.company = games.getCompany();
     }
 }
