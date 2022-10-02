@@ -64,7 +64,7 @@ class PostRepositoryTest {
                 .content("content")
                 .build();
 
-        return Post.createPost(postDto, category, member);
+        return Post.createPost(postDto, category, member, null);
     }
 
     Category generateCategory() {

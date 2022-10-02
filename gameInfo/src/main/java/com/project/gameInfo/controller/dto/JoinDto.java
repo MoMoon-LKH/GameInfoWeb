@@ -1,29 +1,23 @@
 package com.project.gameInfo.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.project.gameInfo.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberDto {
-
-    private Long id;
+public class JoinDto {
 
     @NotNull
     private String memberId;
 
     @NotNull
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotNull
@@ -38,11 +32,7 @@ public class MemberDto {
     @NotNull
     private String email;
 
+    private String status;
+
     private String roles;
-
-    public MemberDto(Member member) {
-        this.id = member.getId();
-        this.nickname = member.getNickname();
-
-    }
 }

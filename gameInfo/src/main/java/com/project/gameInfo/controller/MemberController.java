@@ -1,5 +1,6 @@
 package com.project.gameInfo.controller;
 
+import com.project.gameInfo.controller.dto.JoinDto;
 import com.project.gameInfo.controller.dto.MemberDto;
 import com.project.gameInfo.domain.Member;
 import com.project.gameInfo.exception.DuplicateMemberIdException;
@@ -31,6 +32,8 @@ public class MemberController {
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         memberDto.setRoles("USER");
 
+
+        
         if (memberService.duplicateMemberId(memberDto.getMemberId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DuplicateMemberIdException());
         } else {
@@ -40,12 +43,8 @@ public class MemberController {
             Long memberId = memberService.save(join);
             Member member = memberService.findMemberById(memberId);
 
-            joinMem.put("아이디", member.getId());
-            joinMem.put("멤버 아이디", member.getMemberId());
-            joinMem.put("닉네임", member.getNickname());
-            joinMem.put("이메일", member.getEmail());
 
-            return ResponseEntity.ok(joinMem);
+            return ResponseEntity.ok(convertMemberDto(member));
         }
     }
 
@@ -68,12 +67,12 @@ public class MemberController {
     public MemberDto convertMemberDto(Member member) {
 
         return MemberDto.builder()
+                .id(member.getId())
                 .memberId(member.getMemberId())
                 .name(member.getName())
                 .email(member.getEmail())
                 .phone(member.getPhone())
                 .nickname(member.getNickname())
-                .status(member.getStatus().toString())
                 .roles(member.getRoles())
                 .build();
     }

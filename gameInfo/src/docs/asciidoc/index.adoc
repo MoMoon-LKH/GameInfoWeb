@@ -1,0 +1,43 @@
+= GameInfo API Docs
+github.com()
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+
+[[Member-API]]
+== Member Api
+
+[[Member-회원가입]]
+=== 회원가입
+operation::member-signup[snippets='http-request,http-response,response-fields']
+
+[[Member-조회]]
+=== 조회
+operation::member-get[snippets='http-request,http-response,request-parameters,response-fields']
+
+[[Member-아이디-중복-조회]]
+=== 아이디 중복 조회 (중복이면 true)
+operation::member-duplicate[snippets='http-request,http-response']
+
+[[Auth-API]]
+== Auth API
+
+[[Auth-login]]
+=== 로그인
+operation::auth-login[snippets='http-request,http-response,response-fields']
+
+[[Auth-logout]]
+=== 로그아웃
+operation::auth-logout[snippets='http-request,http-response']
+
+[[Auth-reAuthorize]]
+=== 권한 재인증 (토큰 재발급)
+operation::auth-reaccess[snippets='http-request,http-response,response-headers']
+
+[[Auth-getAuthority]]
+=== 권한 확인 (Manager 이상)
+operation::auth-getAuthority[snippets='http-request,http-response']
