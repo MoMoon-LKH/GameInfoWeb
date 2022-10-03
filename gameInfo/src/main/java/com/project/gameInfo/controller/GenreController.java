@@ -27,7 +27,7 @@ public class GenreController {
         Long save = genreService.save(genre);
 
 
-        return ResponseEntity.ok(genre.getName());
+        return ResponseEntity.ok(genre);
     }
 
     @GetMapping("/manage/genre/list")
