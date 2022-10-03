@@ -1,8 +1,8 @@
 package com.project.gameInfo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.gameInfo.controller.dto.GenreDto;
 import com.project.gameInfo.controller.dto.IdList;
+import com.project.gameInfo.controller.dto.PlatformDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -32,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
-class GenreControllerTest {
+class PlatformControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -43,14 +46,14 @@ class GenreControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("장르 생성")
-    public void genreCreate() throws Exception{
+    @DisplayName("플랫폼 생성")
+    public void createPlatform() throws Exception{
 
         Map<String, String> map = new HashMap<>();
-        map.put("name", "RTS");
+        map.put("name", "platform");
 
         mockMvc.perform(
-                post("/api/manage/genre/new")
+                post("/api/manage/platform/new")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(map))
                         .with(user("james").roles("MANAGE"))
@@ -58,101 +61,103 @@ class GenreControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(
-                        document("genre-create",
+                        document(
+                                "platform-create",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 requestFields(
-                                        fieldWithPath("name").description("이름")
-                                ),
-                                responseFields(
-                                        fieldWithPath("id").description("id"),
-                                        fieldWithPath("name").description("이름")
+                                    fieldWithPath("name").description("이름")
                                 )
                         )
                 );
     }
 
+
     @Test
-    @DisplayName("장르 리스트")
-    public void genreList() throws Exception{
+    @DisplayName("플랫폼 리스트")
+    public void platformList() throws Exception{
 
         mockMvc.perform(
-                        get("/api/manage/genre/list")
+                        get("/api/manage/platform/list")
                                 .param("page", "0")
                                 .with(user("james").roles("MANAGE"))
                 )
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(
-                        document("genre-list",
+                        document("platform-list",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 requestParameters(
-                                    parameterWithName("page").description("리스트 페이지")
+                                        parameterWithName("page").description("해당 페이지")
                                 ),
                                 responseFields(
                                         fieldWithPath("[].id").description("id"),
-                                        fieldWithPath("[].name").description("이름")
+                                        fieldWithPath("[].name").description("플랫폼 이름")
                                 )
-                        ));
+                        )
+                );
     }
 
+
     @Test
-    @DisplayName("검색 리스트")
-    public void searchList() throws Exception{
+    @DisplayName("플랫폼 검색")
+    public void searchPlatform() throws Exception{
 
         mockMvc.perform(
-                get("/api/manage/genre/search")
-                        .with(user("james").roles("MANAGE"))
-                        .param("search", "F")
-        )
+                        get("/api/manage/platform/search")
+                                .param("page", "0")
+                                .param("search", "PS")
+                                .with(user("james").roles("MANAGE"))
+                )
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(
-                        document("genre-search",
+                        document("platform-search",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 requestParameters(
-                                        parameterWithName("search").description("검색어")
+                                        parameterWithName("search").description("플랫폼 검색어"),
+                                        parameterWithName("page").description("해당 페이지")
                                 ),
                                 responseFields(
                                         fieldWithPath("[].id").description("id"),
-                                        fieldWithPath("[].name").description("이름")
+                                        fieldWithPath("[].name").description("플랫폼 이름")
                                 )
-                        ));
+                        )
+                );
     }
 
     @Test
     @Transactional
-    @DisplayName("장르 수정")
-    public void updateGenre() throws Exception{
+    @DisplayName("플랫폼 수정")
+    public void updatePlatform() throws Exception {
 
-        Map<String, Object> map = genreCreate("test");
+        Long id = platformCreate("platform");
 
-        GenreDto genreDto = GenreDto.builder()
-                .id(Long.parseLong(map.get("id").toString()))
-                .name(map.get("name").toString()).build();
+        PlatformDto platformDto = PlatformDto.builder()
+                .id(id)
+                .name("updatePlatform").build();
 
         mockMvc.perform(
-                put("/api/manage/genre")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(genreDto))
-                        .with(user("james").roles("MANAGE"))
-        )
+                        put("/api/manage/platform")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(platformDto))
+                                .with(user("james").roles("MANAGE"))
+                )
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(
-                        document(
-                                "genre-update",
+                        document("platform-update",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 requestFields(
-                                        fieldWithPath("id").description("변경할 장르 id"),
+                                        fieldWithPath("id").description("id"),
                                         fieldWithPath("name").description("변경할 이름")
                                 ),
                                 responseFields(
                                         fieldWithPath("id").description("id"),
-                                        fieldWithPath("name").description("변경 완료된 이름")
+                                        fieldWithPath("name").description("변경한 이름")
                                 )
                         )
                 );
@@ -161,55 +166,52 @@ class GenreControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("장르 삭제")
-    public void deleteGenre() throws Exception{
+    @DisplayName("플랫폼 삭제")
+    public void deletePlatform() throws Exception {
 
-        Map<String, Object> map = genreCreate("test");
-        Map<String, Object> map2 = genreCreate("test2");
+        Long id1 = platformCreate("platform");
+        Long id2 = platformCreate("platform2");
 
         List<Long> list = new ArrayList<>();
-        list.add(Long.parseLong(map.get("id").toString()));
-        list.add(Long.parseLong(map2.get("id").toString()));
-
-        IdList idList = IdList.builder().ids(list).build();
-
-        System.out.println("idList = " + idList.toString());
+        list.add(id1);
+        list.add(id2);
 
         mockMvc.perform(
-                        delete("/api/manage/genre")
+                        delete("/api/manage/platform")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(idList))
+                                .content(objectMapper.writeValueAsString(IdList.builder().ids(list).build()))
                                 .with(user("james").roles("MANAGE"))
                 )
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(
-                        document("genre-delete",
+                        document("platform-delete",
                                 preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 requestFields(
-                                        fieldWithPath("ids").description("삭제할 장르 아이디들")
-                                ))
+                                        fieldWithPath("ids").description("삭제할 id들")
+                                )
+                        )
                 );
     }
 
 
-    protected Map genreCreate(String name) throws Exception {
+    protected Long platformCreate(String name) throws Exception{
 
         Map<String, String> map = new HashMap<>();
         map.put("name", name);
 
         MvcResult mvcResult = mockMvc.perform(
-                        post("/api/manage/genre/new")
+                        post("/api/manage/platform/new")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(map))
                                 .with(user("james").roles("MANAGE"))
                 )
-
-                .andExpect(status().isOk())
                 .andReturn();
 
-        return objectMapper.readValue(mvcResult.getResponse().getContentAsString(), Map.class);
+        return Long.parseLong(mvcResult.getResponse().getContentAsString());
 
     }
+
 
 }

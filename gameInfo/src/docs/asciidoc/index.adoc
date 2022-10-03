@@ -9,7 +9,7 @@ github.com()
 
 
 [[Member-API]]
-== Member Api
+== Member
 
 [[Member-회원가입]]
 === 회원가입
@@ -24,7 +24,7 @@ operation::member-get[snippets='http-request,http-response,request-parameters,re
 operation::member-duplicate[snippets='http-request,http-response']
 
 [[Auth-API]]
-== Auth API
+== Auth
 
 [[Auth-login]]
 === 로그인
@@ -44,14 +44,14 @@ operation::auth-getAuthority[snippets='http-request,http-response']
 
 
 [[Genre-API]]
-== Genre API
+== Genre
 
 [[Genre-create]]
 === 생성
 operation::genre-create[snippets='http-request,http-response,response-fields']
 
 [[Genre-update]]
-=== 업데이트
+=== 수정
 operation::genre-update[snippets='http-request,http-response,request-fields,response-fields']
 
 [[Genre-delete]]
@@ -59,9 +59,35 @@ operation::genre-update[snippets='http-request,http-response,request-fields,resp
 operation::genre-delete[snippets='http-request,http-response,request-fields']
 
 [[Genre-list]]
-=== 장르 리스트
+=== 리스트 조회
 operation::genre-list[snippets='http-request,http-response,request-parameters,response-fields']
 
 [[Genre-search]]
-=== 장르 검색
+=== 리스트 검색 조회
 operation::genre-search[snippets='http-request,http-response,request-parameters,response-fields']
+
+
+[[Platform-API]]
+== Platform
+
+[[Platform-create]]
+=== 생성
+operation::platform-create[snippets='http-request,http-response,request-fields,response-fields']
+
+[[Platform-update]]
+=== 수정
+operation::platform-update[snippets='http-request,http-response,request-fields,response-fields']
+
+[[Platform-delete]]
+=== 삭제
+operation::platform-delete[snippets='http-request,http-response,request-fields']
+
+[[Platform-list]]
+=== 리스트 조회
+operation::platform-list[snippets='http-request,http-response,request-parameters,response-fields']
+
+[[Platform-search]]
+=== 리스트 검색 조회
+operation::platform-search[snippets='http-request,http-response,request-parameters,response-fields']
+
+

@@ -15,11 +15,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class CategoryController {
-
+/*
     private final CategoryService categoryService;
 
 
-  /*  @PostMapping("/manage/category/new/{gamesId}")
+    @PostMapping("/manage/category/new/{gamesId}")
     public ResponseEntity<?> createCategory(
             @RequestBody List<CategoryDto> categoryDtos,
             @PathVariable("gamesId") Long id
@@ -36,8 +36,6 @@ public class CategoryController {
         return ResponseEntity.ok(list);
     }
 
-*/
-/*
     @PutMapping("/manage/category/{categoryId}")
     public ResponseEntity<?> updateName(@PathVariable("categoryId") Long id,
                                         @RequestBody CategoryDto categoryDto
@@ -48,10 +46,9 @@ public class CategoryController {
 
         return ResponseEntity.ok(convertCategoryDto(category));
     }
-*/
 
 
-  /*  @DeleteMapping("/manage/category/{categoryId}")
+    @DeleteMapping("/manage/category/{categoryId}")
     public ResponseEntity<?> deleteCategory(
             @PathVariable("categoryId") Long id
     ) {
@@ -61,9 +58,8 @@ public class CategoryController {
 
         return ResponseEntity.ok("삭제 완료");
     }
-*/
 
-  /*  public CategoryDto convertCategoryDto(Category category) {
+    public CategoryDto convertCategoryDto(Category category) {
         return CategoryDto.builder()
                 .id(category.getId())
                 .name(category.getName())
