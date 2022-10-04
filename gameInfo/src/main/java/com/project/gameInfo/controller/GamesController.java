@@ -69,7 +69,6 @@ public class GamesController {
 
         List<GamesDto> gamesDtos = gamesService.findAllByPage(pageable);
 
-        System.out.println(gamesDtos.size());
         if(gamesDtos.size() > 0) {
             for (GamesDto gamesDto : gamesDtos) {
                 gamesDto.setReviewScore(reviewScoreService.findScoreByGamesId(gamesDto.getId()));

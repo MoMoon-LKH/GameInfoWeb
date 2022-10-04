@@ -91,3 +91,21 @@ operation::platform-list[snippets='http-request,http-response,request-parameters
 operation::platform-search[snippets='http-request,http-response,request-parameters,response-fields']
 
 
+[[Games-API]]
+== Game
+
+[[Games-create]]
+=== 생성
+operation::game-create[snippets='http-request,http-response,request-fields,response-fields']
+
+[[Games-get]]
+=== 조회
+operation::games-get[snippets='http-request,http-response,response-fields']
+
+[[Games-list]]
+=== 리스트 조회
+operation::games-list[snippets='http-request,http-response,request-parameters,response-fields']
+
+[[Games-search]]
+=== 리스트 검색 조회
+operation::games-search[snippets='http-request,http-response,request-parameters,response-fields']

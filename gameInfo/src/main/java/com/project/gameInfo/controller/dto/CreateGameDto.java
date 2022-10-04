@@ -26,7 +26,7 @@ public class CreateGameDto {
 
     private String company;
 
-    @JsonProperty("release_data")
+    @JsonProperty("release_date")
     private Date releaseDate;
 
     @JsonProperty("img_id")
