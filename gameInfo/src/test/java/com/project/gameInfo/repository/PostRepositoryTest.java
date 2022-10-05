@@ -2,6 +2,7 @@ package com.project.gameInfo.repository;
 
 import com.project.gameInfo.config.TestConfig;
 import com.project.gameInfo.controller.dto.CategoryDto;
+import com.project.gameInfo.controller.dto.CreatePostDto;
 import com.project.gameInfo.controller.dto.MemberDto;
 import com.project.gameInfo.controller.dto.PostDto;
 import com.project.gameInfo.domain.Category;
@@ -59,7 +60,7 @@ class PostRepositoryTest {
 
 
     Post generatePost(Member member, Category category){
-        PostDto postDto = PostDto.builder()
+        CreatePostDto postDto = CreatePostDto.builder()
                 .title("title")
                 .content("content")
                 .build();

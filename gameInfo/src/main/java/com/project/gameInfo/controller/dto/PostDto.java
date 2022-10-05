@@ -22,15 +22,7 @@ public class PostDto {
 
     private Date createDate;
 
-    @NotNull
-    private Long categoryId;
-
-    @NotNull
     private Long memberId;
-
-    private String nickname;
-
-    private Long gameId;
 
 
     public PostDto(Post post) {

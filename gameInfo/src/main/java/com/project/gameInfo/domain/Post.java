@@ -1,5 +1,6 @@
 package com.project.gameInfo.domain;
 
+import com.project.gameInfo.controller.dto.CreatePostDto;
 import com.project.gameInfo.controller.dto.PostDto;
 import lombok.Getter;
 
@@ -49,7 +50,7 @@ public class Post {
     public Post() {
     }
 
-    private Post(PostDto postDto, Category category, Member member) {
+    private Post(CreatePostDto postDto, Category category, Member member) {
         this.title = postDto.getTitle();
         this.content = postDto.getContent();
         this.view = 0;
@@ -60,7 +61,7 @@ public class Post {
 
     }
 
-    private Post(PostDto postDto, Category category, Member member, Games games) {
+    private Post(CreatePostDto postDto, Category category, Member member, Games games) {
         this.title = postDto.getTitle();
         this.content = postDto.getContent();
         this.view = 0;
@@ -71,11 +72,11 @@ public class Post {
         this.games = games;
     }
 
-    public static Post createPost(PostDto postDto, Category category, Member member, Games games) {
+    public static Post createPost(CreatePostDto postDto, Category category, Member member, Games games) {
         return new Post(postDto, category ,member , games);
     }
 
-    public static Post createPostNotGames(PostDto postDto, Category category, Member member) {
+    public static Post createPostNotGames(CreatePostDto postDto, Category category, Member member) {
         return new Post(postDto, category, member);
     }
 

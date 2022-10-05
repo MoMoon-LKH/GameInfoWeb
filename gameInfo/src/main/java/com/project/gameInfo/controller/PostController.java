@@ -36,7 +36,7 @@ public class PostController {
 
 
     @PostMapping("/user/post")
-    public ResponseEntity<?> createPost(@RequestBody PostDto postDto, @AuthenticationPrincipal User user) {
+    public ResponseEntity<?> createPost(@RequestBody CreatePostDto postDto, @AuthenticationPrincipal User user) {
 
         Member member = memberService.findMemberByMemberId(user.getUsername());
         Category category = categoryService.findByCategoryId(postDto.getCategoryId());

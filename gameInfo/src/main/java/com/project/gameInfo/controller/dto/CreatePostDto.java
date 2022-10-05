@@ -14,7 +14,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class CreatePostDto {
 
-    private Long id;
 
     @NotNull
     private String title;
@@ -28,6 +27,7 @@ public class CreatePostDto {
     @NotNull
     private Long memberId;
 
+    private Long gameId;
 
 
 }
