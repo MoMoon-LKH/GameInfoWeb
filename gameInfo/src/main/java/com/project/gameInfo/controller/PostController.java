@@ -130,13 +130,12 @@ public class PostController {
 
 
     @DeleteMapping("/user/post")
-    public ResponseEntity<?> deletePost(@RequestBody PostDto postDto, @AuthenticationPrincipal User user) {
+    public ResponseEntity<?> deletePost(@RequestParam Long id, @AuthenticationPrincipal User user) {
 
-        Member member = memberService.findMemberByMemberId(user.getUsername());
+        Post post = postService.findById(id);
 
-        if (member.getId().equals(postDto.getMemberId())) {
-            Post post = postService.findById(postDto.getId());
-            List<Comment> comments = commentService.findAllByPostId(postDto.getId());
+        if (user.getUsername().equals(post.getMember().getMemberId())) {
+            List<Comment> comments = commentService.findAllByPostId(post.getId());
             commentService.deletePostComment(comments);
             postService.delete(post);
 

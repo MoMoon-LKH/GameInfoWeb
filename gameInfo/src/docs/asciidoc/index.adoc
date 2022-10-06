@@ -109,3 +109,27 @@ operation::games-list[snippets='http-request,http-response,request-parameters,re
 [[Games-search]]
 === 리스트 검색 조회
 operation::games-search[snippets='http-request,http-response,request-parameters,response-fields']
+
+
+[[Post-API]]
+== Post
+
+[[Post-create]]
+=== 생성
+operation::post-create[snippets='http-request,http-response,request-fields,response-fields']
+
+[[Post-update]]
+=== 수정
+operation::post-update[snippets='http-request,http-response,request-fields']
+
+[[Post-delete]]
+=== 삭제
+operation::post-delete[snippets='http-request,http-response,request-parameters']
+
+[[Post-get]]
+=== 조회
+operation::post-get[snippets='http-request,http-response,path-parameters,response-fields']
+
+[[Post-list]]
+=== 리스트 조회
+operation::post-list[snipperts='http-request,http-response,request-params,response-fields']
