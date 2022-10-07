@@ -2,6 +2,7 @@ package com.project.gameInfo.controller;
 
 
 import com.project.gameInfo.controller.dto.CommentDto;
+import com.project.gameInfo.controller.dto.CreateCommentDto;
 import com.project.gameInfo.domain.Comment;
 import com.project.gameInfo.domain.Member;
 import com.project.gameInfo.domain.Post;
@@ -44,7 +45,7 @@ public class CommentController {
 
 
     @PostMapping("/user/comment")
-    public ResponseEntity<?> createComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user) {
+    public ResponseEntity<?> createComment(@RequestBody CreateCommentDto commentDto, @AuthenticationPrincipal User user) {
 
         Member member = memberService.findMemberByMemberId(user.getUsername());
         Post post = postService.findById(commentDto.getPostId());
@@ -102,7 +103,7 @@ public class CommentController {
                 .content(comment.getContent())
                 .nickname(comment.getMember().getNickname())
                 .memberId(comment.getMember().getId())
-                .postId(comment.getPost().getId())
+                .status(comment.getStatus().toString())
                 .build();
     }
 }

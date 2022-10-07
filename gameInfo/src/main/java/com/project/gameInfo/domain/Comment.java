@@ -1,6 +1,7 @@
 package com.project.gameInfo.domain;
 
 import com.project.gameInfo.controller.dto.CommentDto;
+import com.project.gameInfo.controller.dto.CreateCommentDto;
 import com.project.gameInfo.domain.enums.CommentStatus;
 import lombok.Getter;
 
@@ -44,7 +45,7 @@ public class Comment {
 
     public Comment() {}
 
-    private Comment(CommentDto commentDto, Post post, Member member) {
+    private Comment(CreateCommentDto commentDto, Post post, Member member) {
         this.replyId = commentDto.getReplyId();
         this.content = commentDto.getContent();
         this.createDate = new Date();
@@ -54,7 +55,7 @@ public class Comment {
     }
 
 
-    public static Comment createComment(CommentDto commentDto, Post post, Member member) {
+    public static Comment createComment(CreateCommentDto commentDto, Post post, Member member) {
         return new Comment(commentDto, post, member);
     }
 
