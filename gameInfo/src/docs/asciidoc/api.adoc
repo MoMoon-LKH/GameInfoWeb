@@ -1,0 +1,394 @@
+= GameInfo API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+
+[[Member-API]]
+== Member
+
+
+[[Member-회원가입]]
+=== 회원가입
+==== Http request
+include::{snippets}/member-signup/http-request.adoc[]
+
+==== Http response
+include::{snippets}/member-signup/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/member-signup/response-fields.adoc[]
+
+[[Member-조회]]
+=== 조회
+==== Http request
+include::{snippets}/member-get/http-request.adoc[]
+
+==== Request parameters
+include::{snippets}/member-get/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/member-get/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/member-get/response-fields.adoc[]
+
+
+[[Member-아이디-중복-조회]]
+=== 아이디 중복 조회 (중복이면 true)
+==== Http request
+include::{snippets}/member-duplicate/http-request.adoc[]
+
+==== Request parameters
+include::{snippets}/member-duplicate/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/member-duplicate/http-response.adoc[]
+
+[[Auth-API]]
+== Auth
+
+[[Auth-login]]
+=== 로그인
+==== Http request
+include::{snippets}/auth-login/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/auth-login/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/auth-login/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/auth-login/response-fields.adoc[]
+
+
+
+[[Auth-logout]]
+=== 로그아웃
+
+==== Http request
+include::{snippets}/auth-logout/http-request.adoc[]
+
+
+==== Http response
+include::{snippets}/auth-logout/http-response.adoc[]
+
+
+[[Auth-reAuthorize]]
+=== 권한 재인증 (토큰 재발급)
+==== Http request
+include::{snippets}/auth-reaccess/http-request.adoc[]
+
+==== Http response
+include::{snippets}/auth-reaccess/http-response.adoc[]
+
+==== Response headers
+include::{snippets}/auth-reaccess/response-headers.adoc[]
+
+
+[[Auth-getAuthority]]
+=== 권한 확인 (Manager 이상)
+==== Http request
+include::{snippets}/auth-getAuthority/http-request.adoc[]
+
+==== Http response
+include::{snippets}/auth-getAuthority/http-response.adoc[]
+
+
+[[Genre-API]]
+== Genre
+
+[[Genre-create]]
+=== 생성
+==== Http request
+include::{snippets}/genre-create/http-request.adoc[]
+
+==== Http response
+include::{snippets}/genre-create/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/genre-create/response-fields.adoc[]
+
+
+[[Genre-update]]
+=== 수정
+==== Http request
+include::{snippets}/genre-update/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/genre-update/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/genre-update/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/genre-update/response-fields.adoc[]
+
+[[Genre-delete]]
+=== 삭제
+==== Http request
+include::{snippets}/genre-delete/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/genre-delete/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/genre-delete/http-response.adoc[]
+
+
+[[Genre-list]]
+=== 리스트 조회
+==== Http request
+include::{snippets}/genre-list/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/genre-list/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/genre-list/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/genre-list/response-fields.adoc[]
+
+
+[[Genre-search]]
+=== 리스트 검색 조회
+==== Http request
+include::{snippets}/genre-search/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/genre-search/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/genre-search/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/genre-search/response-fields.adoc[]
+
+
+[[Platform-API]]
+== Platform
+
+[[Platform-create]]
+=== 생성
+==== Http request
+include::{snippets}/platform-create/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/platform-create/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/platform-create/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/platform-create/response-fields.adoc[]
+
+[[Platform-update]]
+=== 수정
+==== Http request
+include::{snippets}/platform-update/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/platform-update/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/platform-update/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/platform-update/response-fields.adoc[]
+
+
+[[Platform-delete]]
+=== 삭제
+==== Http request
+include::{snippets}/platform-delete/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/platform-delete/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/platform-delete/http-response.adoc[]
+
+
+[[Platform-list]]
+=== 리스트 조회
+==== Http request
+include::{snippets}/platform-list/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/platform-list/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/platform-list/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/platform-list/response-fields.adoc[]
+
+
+[[Platform-search]]
+=== 리스트 검색 조회
+==== Http request
+include::{snippets}/platform-search/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/platform-search/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/platform-search/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/platform-search/response-fields.adoc[]
+
+
+[[Games-API]]
+== Game
+
+[[Games-create]]
+=== 생성
+==== Http request
+include::{snippets}/game-create/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/game-create/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/game-create/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/game-create/response-fields.adoc[]
+
+[[Games-get]]
+=== 조회
+==== Http request
+include::{snippets}/games-get/http-request.adoc[]
+
+==== Path parameters
+include::{snippets}/games-get/path-parameters.adoc[]
+
+==== Http response
+include::{snippets}/games-get/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/games-get/response-fields.adoc[]
+
+
+[[Games-list]]
+=== 리스트 조회
+==== Http request
+include::{snippets}/games-list/http-request.adoc[]
+
+==== Request parameters
+include::{snippets}/games-list/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/games-list/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/games-list/response-fields.adoc[]
+
+
+[[Games-search]]
+=== 리스트 검색 조회
+==== Http request
+include::{snippets}/games-search/http-request.adoc[]
+
+==== Request parameters
+include::{snippets}/games-search/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/games-search/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/games-search/response-fields.adoc[]
+
+
+[[Post-API]]
+== Post
+
+[[Post-create]]
+=== 생성
+==== Http request
+include::{snippets}/post-create/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/post-create/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/post-create/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/post-create/response-fields.adoc[]
+
+
+[[Post-update]]
+=== 수정
+==== Http request
+include::{snippets}/post-update/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/post-update/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/post-update/http-response.adoc[]
+
+
+[[Post-delete]]
+=== 삭제
+==== Http request
+include::{snippets}/post-delete/http-request.adoc[]
+
+==== Request parameters
+include::{snippets}/post-delete/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/post-delete/http-response.adoc[]
+
+
+[[Post-get]]
+=== 조회
+==== Http request
+include::{snippets}/post-get/http-request.adoc[]
+
+==== Path parameters
+include::{snippets}/post-get/path-parameters.adoc[]
+
+==== Http response
+include::{snippets}/post-get/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/post-get/response-fields.adoc[]
+
+
+[[Post-list]]
+=== 리스트 조회
+==== Http request
+include::{snippets}/post-list/http-request.adoc[]
+
+==== Request parameters
+include::{snippets}/post-list/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/post-list/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/post-list/response-fields.adoc[]
+
+
+[[Comment-API]]
+== Comment
+=== 생성
+==== Http request
+include::{snippets}/comment-create/http-request.adoc[]
+
+==== Request parameters
+include::{snippets}/comment-create/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/comment-create/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/comment-create/response-fields.adoc[]

@@ -83,7 +83,7 @@ public class AuthController {
         map.put("message", "Login Success");
         map.put("id", member.getId());
         map.put("nickname", member.getNickname());
-        map.put("accessToken", access);
+        map.put("accessToken", "Bearer " + access);
 
 
         return ResponseEntity.ok(map);

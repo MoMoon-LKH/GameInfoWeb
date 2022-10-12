@@ -122,7 +122,10 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(
-                        document("member-duplicate")
+                        document("member-duplicate",
+                                requestParameters(
+                                        parameterWithName("memberId").description("조회할 아이디")
+                                ))
                 );
     }
 
