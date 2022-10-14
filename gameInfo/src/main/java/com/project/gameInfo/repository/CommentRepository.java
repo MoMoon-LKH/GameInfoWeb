@@ -6,7 +6,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long>, CustomCommentRepository {
 
-    List<Comment> findAllByPostIdOrderByCreateDateAsc(@Param("postId") Long postId);
+
+    List<Comment> findAllByPostId(@Param("postId") Long postId);
 }

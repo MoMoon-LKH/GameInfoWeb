@@ -18,6 +18,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,8 +41,8 @@ class CommentControllerTest {
     public void createComment() throws Exception{
 
         CreateCommentDto commentDto = CreateCommentDto.builder()
-                .replyId(0L)
-                .content("comment Test")
+                .parentId(22L)
+                .content("test1-6")
                 .memberId(1L)
                 .postId(2L).build();
 
@@ -59,20 +60,44 @@ class CommentControllerTest {
                                 preprocessResponse(prettyPrint()),
                                 requestFields(
                                         fieldWithPath("content").description("댓글 내용"),
-                                        fieldWithPath("replyId").type(JsonFieldType.NUMBER).description("답글할 댓글 id"),
+                                        fieldWithPath("parentId").description("답글할 댓글 id"),
                                         fieldWithPath("memberId").description("작성자 id"),
                                         fieldWithPath("postId").description("포스트 id")
                                 ),
                                 responseFields(
                                         fieldWithPath("id").description("id"),
-                                        fieldWithPath("replyId").type(JsonFieldType.NUMBER).description("답글 id"),
+                                        fieldWithPath("parentNickname").description("부모 닉네임"),
                                         fieldWithPath("memberId").description("작성자 id"),
                                         fieldWithPath("nickname").description("작성자 id"),
                                         fieldWithPath("content").description("작성 댓글"),
-                                        fieldWithPath("status").description("삭제 여부")
+                                        fieldWithPath("status").description("삭제 여부"),
+                                        fieldWithPath("likes").description("좋아요 수"),
+                                        fieldWithPath("unlikes").description("싫어요 수"),
+                                        fieldWithPath("groupNum").description("댓글 그룹 아이디"),
+                                        fieldWithPath("groupOrder").description("댓글 그룹 순서")
                                 )
                         )
                 );
     }
+
+    @Test
+    @DisplayName("댓글 리스트 조회")
+    public void commentList() throws Exception {
+
+        mockMvc.perform(
+                        get("/api/all/comment")
+                                .param("postId", "2")
+                                .param("page","0")
+                )
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andDo(document("comment-list",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint())
+                        )
+                );
+
+    }
+
 
 }

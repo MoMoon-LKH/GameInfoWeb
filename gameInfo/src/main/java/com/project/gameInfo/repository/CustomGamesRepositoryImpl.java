@@ -34,8 +34,8 @@ public class CustomGamesRepositoryImpl implements CustomGamesRepository {
                         games.introduction,
                         games.company,
                         games.releaseDate,
-                        games.imageUrl.as("imgUrl"
-                )))
+                        games.imageUrl.as("imgUrl")
+                ))
                 .from(games)
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())

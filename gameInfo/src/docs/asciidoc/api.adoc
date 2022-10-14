@@ -392,3 +392,12 @@ include::{snippets}/comment-create/http-response.adoc[]
 
 ==== Response fields
 include::{snippets}/comment-create/response-fields.adoc[]
+
+=== 리스트 조회
+==== Http request
+include::{snippets}/comment-list/http-request.adoc[]
+
+==== Http response
+include::{snippets}/comment-list/http-response.adoc[]
+
+

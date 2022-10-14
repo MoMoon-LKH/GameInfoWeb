@@ -5,6 +5,7 @@ import com.project.gameInfo.domain.Comment;
 import com.project.gameInfo.exception.NotFoundCommentException;
 import com.project.gameInfo.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +45,18 @@ public class CommentService {
     }
 
     public List<Comment> findAllByPostId(Long id) {
-        return commentRepository.findAllByPostIdOrderByCreateDateAsc(id);
+        return commentRepository.findAllByPostId(id);
+    }
+
+    public List<Comment> findAllByPostIdPage(Long id, Pageable pageable){
+        return commentRepository.findAllByPostId(id, pageable);
+    }
+
+    public Integer maxGroupOrders(Long postId, int groupNum) {
+        return commentRepository.maxGroupOrder(postId, groupNum);
+    }
+
+    public Integer maxGroupNum(Long postId) {
+        return commentRepository.maxGroupNum(postId);
     }
 }
