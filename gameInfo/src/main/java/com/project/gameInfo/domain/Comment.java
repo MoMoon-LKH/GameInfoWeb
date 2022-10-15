@@ -2,6 +2,7 @@ package com.project.gameInfo.domain;
 
 import com.project.gameInfo.controller.dto.CommentDto;
 import com.project.gameInfo.controller.dto.CreateCommentDto;
+import com.project.gameInfo.controller.dto.UpdateCommentDto;
 import com.project.gameInfo.domain.enums.CommentStatus;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
@@ -71,7 +72,7 @@ public class Comment {
         return new Comment(commentDto, groupNum, groupOrder, post, member, parent);
     }
 
-    public void updateComment(CommentDto commentDto) {
+    public void updateComment(UpdateCommentDto commentDto) {
         this.content = commentDto.getContent();
     }
 

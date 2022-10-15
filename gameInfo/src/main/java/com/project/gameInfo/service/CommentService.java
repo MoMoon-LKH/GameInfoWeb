@@ -1,6 +1,7 @@
 package com.project.gameInfo.service;
 
 import com.project.gameInfo.controller.dto.CommentDto;
+import com.project.gameInfo.controller.dto.UpdateCommentDto;
 import com.project.gameInfo.domain.Comment;
 import com.project.gameInfo.exception.NotFoundCommentException;
 import com.project.gameInfo.repository.CommentRepository;
@@ -25,7 +26,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void updateComment(Comment comment, CommentDto commentDto) {
+    public void updateComment(Comment comment, UpdateCommentDto commentDto) {
         comment.updateComment(commentDto);
     }
 

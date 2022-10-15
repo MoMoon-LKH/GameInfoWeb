@@ -3,6 +3,7 @@ package com.project.gameInfo.controller;
 
 import com.project.gameInfo.controller.dto.CommentDto;
 import com.project.gameInfo.controller.dto.CreateCommentDto;
+import com.project.gameInfo.controller.dto.UpdateCommentDto;
 import com.project.gameInfo.domain.Comment;
 import com.project.gameInfo.domain.Member;
 import com.project.gameInfo.domain.Post;
@@ -72,13 +73,12 @@ public class CommentController {
 
     }
 
-    @PutMapping("/user/comment")
-    public ResponseEntity<?> updateComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user) {
+    @PatchMapping("/user/comment")
+    public ResponseEntity<?> updateComment(@Valid @RequestBody UpdateCommentDto commentDto, @AuthenticationPrincipal User user) {
 
-        Member member = memberService.findMemberByMemberId(user.getUsername());
+        Comment comment = commentService.findById(commentDto.getId());
 
-        if (user.getUsername().equals(member.getMemberId())) {
-            Comment comment = commentService.findById(commentDto.getId());
+        if (comment.getMember().getMemberId().equals(user.getUsername())) {
             commentService.updateComment(comment, commentDto);
 
             return ResponseEntity.ok(convertCommentDto(comment));
@@ -89,12 +89,11 @@ public class CommentController {
 
 
     @DeleteMapping("/user/comment")
-    public ResponseEntity<?> deleteComment(@RequestBody CommentDto commentDto, @AuthenticationPrincipal User user) {
+    public ResponseEntity<?> deleteComment(@RequestParam Long commentId, @AuthenticationPrincipal User user) {
 
-        Member member = memberService.findMemberByMemberId(user.getUsername());
+        Comment comment = commentService.findById(commentId);
 
-        if (user.getUsername().equals(member.getMemberId())) {
-            Comment comment = commentService.findById(commentDto.getId());
+        if (comment.getMember().getMemberId().equals(user.getUsername())) {
             commentService.deleteComment(comment);
 
             return ResponseEntity.ok("삭제가 정상적으로 이루어졌습니다.");

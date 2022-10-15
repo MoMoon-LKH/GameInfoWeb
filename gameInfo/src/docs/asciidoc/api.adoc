@@ -393,11 +393,42 @@ include::{snippets}/comment-create/http-response.adoc[]
 ==== Response fields
 include::{snippets}/comment-create/response-fields.adoc[]
 
+=== 수정
+==== Http request
+include::{snippets}/comment-update/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/comment-update/request-fields.adoc[]
+
+==== Http response
+include::{snippets}/comment-update/http-response.adoc[]
+
+==== Response fields
+include::{snippets}/comment-update/response-fields.adoc[]
+
+
+=== 삭제
+==== Http request
+include::{snippets}/comment-delete/http-request.adoc[]
+
+==== Request fields
+include::{snippets}/comment-delete/request-parameters.adoc[]
+
+==== Http response
+include::{snippets}/comment-delete/http-response.adoc[]
+
+
+
 === 리스트 조회
 ==== Http request
 include::{snippets}/comment-list/http-request.adoc[]
 
+=== Request parameters
+include::{snippets}/comment-list/request-parameters.adoc[]
+
 ==== Http response
 include::{snippets}/comment-list/http-response.adoc[]
 
+=== Response fields
+include::{snippets}/comment-list/response-fields.adoc[]
 
