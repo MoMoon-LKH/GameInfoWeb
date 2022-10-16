@@ -52,7 +52,7 @@ public class Comment {
     private List<CommentLike> commentLikes = new ArrayList<>();
 
     @OneToMany(mappedBy = "comment")
-    private List<CommentUnlike> commentUnlikes = new ArrayList<>();
+    private List<CommentDislike> commentUnlikes = new ArrayList<>();
 
     public Comment() {}
 

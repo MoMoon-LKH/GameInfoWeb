@@ -1,39 +1,33 @@
 package com.project.gameInfo.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
-@Entity(name = "comment_like")
+@Entity(name = "comment_dislike")
 @Getter
 @NoArgsConstructor
-public class CommentLike {
+public class CommentDislike {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    @ManyToOne
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    private CommentLike(Member member, Comment comment) {
+
+    private CommentDislike(Member member, Comment comment) {
         this.member = member;
         this.comment = comment;
     }
 
-
-    public static CommentLike createLike(Member member, Comment comment) {
-        return new CommentLike(member, comment);
+    public static CommentDislike createUnlike(Member member, Comment comment) {
+        return new CommentDislike(member, comment);
     }
-
-
-
 }

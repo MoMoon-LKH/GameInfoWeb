@@ -54,7 +54,7 @@ public class Member {
     private List<CommentLike> commentLikes = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<CommentUnlike> commentUnlikes = new ArrayList<>();
+    private List<CommentDislike> commentUnlikes = new ArrayList<>();
 
 
 

@@ -4,9 +4,8 @@ package com.project.gameInfo.controller;
 import com.project.gameInfo.controller.dto.CommentDto;
 import com.project.gameInfo.controller.dto.CreateCommentDto;
 import com.project.gameInfo.controller.dto.UpdateCommentDto;
-import com.project.gameInfo.domain.Comment;
-import com.project.gameInfo.domain.Member;
-import com.project.gameInfo.domain.Post;
+import com.project.gameInfo.domain.*;
+import com.project.gameInfo.service.CommentLikeService;
 import com.project.gameInfo.service.CommentService;
 import com.project.gameInfo.service.MemberService;
 import com.project.gameInfo.service.PostService;
@@ -20,8 +19,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,6 +31,7 @@ public class CommentController {
     private final MemberService memberService;
     private final PostService postService;
 
+    private final CommentLikeService commentLikeService;
 
 
     @GetMapping("/all/comment")
@@ -101,6 +100,69 @@ public class CommentController {
         }
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("해당 작성자에 대한 접근 권한이 없습니다.");
+    }
+
+
+    @PostMapping("/user/comment/like")
+    public ResponseEntity<?> likeComment(@RequestParam Long commentId, @AuthenticationPrincipal User user) {
+
+        Member member = memberService.findMemberByMemberId(user.getUsername());
+        Comment comment = commentService.findById(commentId);
+
+        Optional<CommentLike> commentLike = commentLikeService.findCommentLike(commentId, member.getId());
+        Map<String, String> map = new HashMap<>();
+
+        if (commentLike.isPresent()) {
+            commentLikeService.delLike(commentLike.get());
+
+            map.put("name", "like");
+            map.put("type", "delete");
+            map.put("message", "success");
+
+            return ResponseEntity.ok(map);
+
+        } else {
+            commentLikeService.saveLike(CommentLike.createLike(member, comment));
+
+            map.put("name", "like");
+            map.put("type", "create");
+            map.put("message", "success");
+
+            return ResponseEntity.ok("like create success");
+
+        }
+    }
+
+
+    @PostMapping("/user/comment/unlike")
+    public ResponseEntity<?> unlikeComment(@RequestParam Long commentId, @AuthenticationPrincipal User user) {
+
+        Member member = memberService.findMemberByMemberId(user.getUsername());
+        Comment comment = commentService.findById(commentId);
+
+        Optional<CommentDislike> commentDislike = commentLikeService.findCommentDislike(commentId, member.getId());
+        Map<String, String> map = new HashMap<>();
+
+        if (commentDislike.isPresent()) {
+            commentLikeService.delDislike(commentDislike.get());
+
+            map.put("name", "dislike");
+            map.put("type", "delete");
+            map.put("message", "success");
+
+            return ResponseEntity.ok(map);
+
+        } else {
+            commentLikeService.saveDislike(CommentDislike.createUnlike(member, comment));
+
+            map.put("name", "dislike");
+            map.put("type", "create");
+            map.put("message", "success");
+
+            return ResponseEntity.ok(map);
+
+        }
+
     }
 
 

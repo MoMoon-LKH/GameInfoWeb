@@ -192,6 +192,65 @@ class CommentControllerTest {
 
     }
 
+    @Test
+    @DisplayName("댓글 좋아요 기능")
+    @Transactional
+    public void commentLike() throws Exception {
+
+        mockMvc.perform(
+                        post("/api/user/comment/like")
+                                .param("commentId", "22")
+                                .with(user("test").roles("ADMIN"))
+                )
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andDo(
+                        document("comment-like",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                requestParameters(
+                                        parameterWithName("commentId").description("해당 댓글 id")
+                                ),
+                                responseFields(
+                                        fieldWithPath("name").description("버튼 타입 (Like | dislike)"),
+                                        fieldWithPath("type").description("동작 타입 (create | delete)"),
+                                        fieldWithPath("message").description("메시지")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    @DisplayName("댓글 싫어요 기능")
+    @Transactional
+    public void commentUnlike() throws Exception {
+
+        mockMvc.perform(
+                        post("/api/user/comment/unlike")
+                                .param("commentId", "22")
+                                .with(user("test").roles("ADMIN"))
+                )
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andDo(
+                        document("comment-dislike",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                requestParameters(
+                                        parameterWithName("commentId").description("해당 댓글 id")
+                                ),
+                                requestParameters(
+                                        parameterWithName("commentId").description("해당 댓글 id")
+                                ),
+                                responseFields(
+                                        fieldWithPath("name").description("버튼 타입 (Like | dislike)"),
+                                        fieldWithPath("type").description("동작 타입 (create | delete)"),
+                                        fieldWithPath("message").description("메시지")
+                                )
+                        )
+                );
+    }
+
 
 
 
