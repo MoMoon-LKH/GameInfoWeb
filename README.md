@@ -53,5 +53,10 @@
 
 <br>
 
-## 5. Rest Docs
+## 5 DB 설계
+![db](https://user-images.githubusercontent.com/66755342/196113931-62f8f3f0-7f60-4bec-8714-40a7da63cdea.PNG)
+
+<br>
+
+## 6. Rest Docs
 
