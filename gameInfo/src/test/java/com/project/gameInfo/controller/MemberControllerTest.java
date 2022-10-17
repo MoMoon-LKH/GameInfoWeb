@@ -48,8 +48,8 @@ class MemberControllerTest {
     public void createMember() throws Exception {
 
         JoinDto memberDto = JoinDto.builder()
-                .memberId("SignUpTest")
-                .password("SignUPTest")
+                .memberId("Test2")
+                .password("Test2")
                 .nickname("SignUpNickname")
                 .name("가입테스트")
                 .phone("010-2222-2222")

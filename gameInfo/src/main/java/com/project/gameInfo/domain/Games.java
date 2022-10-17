@@ -18,10 +18,13 @@ public class Games {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 50)
     private String name;
 
+    @Column(length = 300)
     private String introduction;
 
+    @Column(length = 50)
     private String company;
 
     @Column(name = "release_date")

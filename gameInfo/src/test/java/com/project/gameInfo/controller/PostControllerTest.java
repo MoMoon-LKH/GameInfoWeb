@@ -48,7 +48,7 @@ class PostControllerTest {
         CreatePostDto postDto = CreatePostDto.builder()
                 .title("post test")
                 .content("content")
-                .memberId(1L)
+                .memberId(11L)
                 .categoryId(1L)
                 .gameId(1L)
                 .build();
@@ -56,7 +56,7 @@ class PostControllerTest {
 
         mockMvc.perform(
                         post("/api/user/post")
-                                .with(user("test").roles("ADMIN"))
+                                .with(user("test2").roles("USER"))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(postDto))
                 )

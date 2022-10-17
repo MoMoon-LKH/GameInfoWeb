@@ -20,17 +20,19 @@ public class Member {
     @Column(name = "member_id", unique = true, length = 50)
     private String memberId;
 
+    @Column(length = 50)
     private String password;
 
     @Column(length = 15)
     private String name;
 
-    @Column(length = 15)
+    @Column(length = 20)
     private String nickname;
 
+    @Column(length = 15)
     private String phone;
 
-    @Column(length = 60)
+    @Column(length = 50)
     private String email;
 
     @Column(name = "create_date")
