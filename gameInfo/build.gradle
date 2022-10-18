@@ -108,3 +108,7 @@ configurations { // querydsl이 compileClassPath을 상속
 compileQuerydsl { // 컴파일 속성
 	options.annotationProcessorPath = configurations.querydsl
 }
+
+jar{
+	enabled = false
+}
