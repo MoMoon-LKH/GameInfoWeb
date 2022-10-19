@@ -18,6 +18,7 @@
 - Access 토큰 -> Session Storage에 저장
 - Refresh 토큰 -> 쿠키에 저장 (Http Only Secure) <br> 
  ㄴ Http Only을 사용하기 위해서 Https 인증서 적용 (인증 받지않은 인증서)
+ // Docker로 인해 변경될 예정
 <br>
 
 ## 4. 기능
@@ -59,4 +60,4 @@
 <br>
 
 ## 6. Rest Docs
-
+[GameInfo Docs Link](http://43.201.119.217:8080/docs)
