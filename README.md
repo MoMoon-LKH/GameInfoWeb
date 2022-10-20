@@ -59,5 +59,5 @@
 
 <br>
 
-## 6. Rest Docs
+## 6. Rest Api Docs
 [GameInfo Docs Link](http://43.201.119.217:8080/docs)
