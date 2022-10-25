@@ -15,9 +15,10 @@
 ## 3. 인증 방식
 ### JWT 토큰 방식
 - Access-Refresh 방식
-- Access 토큰 -> Session Storage에 저장
-- Refresh 토큰 -> 쿠키에 저장 (Http Only Secure) <br> 
+- Access 토큰 -> 클라이언트의 Session Storage에 저장
+- Refresh 토큰 -> 쿠키에 저장 (Http Only, Secure) <br> 
  ㄴ Http Only을 사용하기 위해서 Https 인증서 적용 (인증 받지않은 인증서)
+ <br>
  // Docker로 인해 변경될 예정
 <br>
 
